@@ -1,0 +1,12 @@
+{"type":"FeatureCollection", "features": [
+{"geometry": {"type":"Point","coordinates":[8.902734466535639,47.488404162508886]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51296},
+{"geometry": {"type":"Point","coordinates":[8.896144149523204,47.493929602572884]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51297},
+{"geometry": {"type":"Point","coordinates":[8.89939733039189,47.491082005761278]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51298},
+{"geometry": {"type":"Point","coordinates":[8.08490900689792,47.40337814780861]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51300},
+{"geometry": {"type":"Point","coordinates":[8.075056037805204,47.40035667726584]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51301},
+{"geometry": {"type":"Point","coordinates":[8.080574036258687,47.402044124938882]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51302},
+{"geometry": {"type":"Point","coordinates":[8.072119781207094,47.398519935608888]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51303},
+{"geometry": {"type":"Point","coordinates":[8.087915928117313,47.404431648734814]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51304},
+{"geometry": {"type":"Point","coordinates":[8.049131387724668,47.401557784033706]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51305},
+{"geometry": {"type":"Point","coordinates":[8.041322377909909,47.396327989657614]}, "type":"Feature", "properties": {"kind":"bus"}, "id":51306}
+]}

@@ -1,11 +1,12 @@
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
+goog.require('ol.interaction.Select');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
-goog.require('ol.source.StaticCluster');
 goog.require('ol.source.GeoJSON');
 goog.require('ol.source.MapQuest');
+goog.require('ol.source.StaticCluster');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -56,9 +57,6 @@ var raster = new ol.layer.Tile({
   source: new ol.source.MapQuest({layer: 'sat'})
 });
 
-var raw = new ol.layer.Vector({
-  source: source
-});
 
 var map = new ol.Map({
   layers: [raster, clusters],
@@ -69,3 +67,23 @@ var map = new ol.Map({
     zoom: 2
   })
 });
+
+var select = new ol.interaction.Select();
+map.addInteraction(select);
+select.on('select', function(e) {
+    var features = e.target.getFeatures();
+    console.log('Selected', features.getLength());
+    var hierarchy = function(feature) {
+      var hiddenFeatures = feature.get('features');
+      if (!hiddenFeatures || hiddenFeatures.length == 1) {
+        return feature.getId();
+      } else {
+        return hiddenFeatures.map(hierarchy);
+      }
+    };
+    features.forEach(function(feature) {
+      var hiddenFeatures = feature.get('features');
+      console.log('Hidding', hiddenFeatures.length, hierarchy(feature));
+    });
+});
+

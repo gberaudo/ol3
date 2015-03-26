@@ -82,7 +82,6 @@ ol.source.StaticCluster.prototype.loadFeatures = function(extent, resolution,
     console.log('Res', resolution);
     this.resolution_ = resolution;
     this.clear();
-    this.cluster_();
     this.addFeatures(this.allFeatures_);
   }
 };
@@ -95,7 +94,9 @@ ol.source.StaticCluster.prototype.loadFeatures = function(extent, resolution,
 ol.source.StaticCluster.prototype.onSourceChange_ = function() {
   // Regenerate the cluster hierarchy
   console.log('Source change');
-  this.cluster_();
+  var leafFeatures = this.source_.getFeatures();
+  this.allFeatures_ = this.cluster_(300, leafFeatures);
+  this.allFeatures_ = this.cluster_(30000, this.allFeatures_);
   this.clear(); // clear the rbush
   this.addFeatures(this.allFeatures_);
   this.changed();
@@ -103,19 +104,19 @@ ol.source.StaticCluster.prototype.onSourceChange_ = function() {
 
 
 /**
+ * @param {number} resolution
+ * @param {Array.<ol.Feature>} leafFeatures
+ * @return {Array.<ol.Feature>}
  * @private
  */
-ol.source.StaticCluster.prototype.cluster_ = function() {
-  if (!goog.isDef(this.resolution_)) {
-    console.log('no resolution');
-    return;
-  }
-
-  console.log('generating cluster');
-  this.allFeatures_.length = 0;
+ol.source.StaticCluster.prototype.cluster_ = function(resolution,
+    leafFeatures) {
+  console.log('generating cluster for', resolution);
+  /** @type {Array.<ol.Feature>} */
+  var clusterFeatures = [];
   var extent = ol.extent.createEmpty();
-  var mapDistance = this.distance_ * this.resolution_;
-  var leafFeatures = this.source_.getFeatures();
+  var mapDistance = this.distance_ * resolution;
+  var leafSource = new ol.source.Vector({features: leafFeatures});
 
   /**
    * @type {Object.<string, boolean>}
@@ -130,7 +131,7 @@ ol.source.StaticCluster.prototype.cluster_ = function() {
       ol.extent.createOrUpdateFromCoordinate(coordinates, extent);
       ol.extent.buffer(extent, mapDistance, extent);
 
-      var neighbors = this.source_.getFeaturesInExtent(extent);
+      var neighbors = leafSource.getFeaturesInExtent(extent);
       goog.asserts.assert(neighbors.length >= 1);
       neighbors = goog.array.filter(neighbors, function(neighbor) {
         var uid = goog.getUid(neighbor).toString();
@@ -141,11 +142,12 @@ ol.source.StaticCluster.prototype.cluster_ = function() {
           return false;
         }
       });
-      this.allFeatures_.push(this.createCluster_(neighbors));
+      clusterFeatures.push(this.createCluster_(neighbors));
     }
   }, this));
   goog.asserts.assert(
-      goog.object.getCount(clustered) == this.source_.getFeatures().length);
+      goog.object.getCount(clustered) == leafFeatures.length);
+  return clusterFeatures;
 };
 
 
@@ -184,8 +186,8 @@ ol.source.StaticCluster.prototype.createCluster_ = function(features) {
   // - confusing flow
   var cluster = new ol.Feature({
     geometry: new ol.geom.Point(closestCoordinates),
-    features: features,
-    id: closestFeature.getId()
+    features: features
   });
+  cluster.setId(closestFeature.getId());
   return cluster;
 };

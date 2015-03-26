@@ -1,6 +1,7 @@
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
+goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Select');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
@@ -71,19 +72,32 @@ var map = new ol.Map({
 var select = new ol.interaction.Select();
 map.addInteraction(select);
 select.on('select', function(e) {
-    var features = e.target.getFeatures();
-    console.log('Selected', features.getLength());
-    var hierarchy = function(feature) {
-      var hiddenFeatures = feature.get('features');
-      if (!hiddenFeatures || hiddenFeatures.length == 1) {
-        return feature.getId();
-      } else {
-        return hiddenFeatures.map(hierarchy);
-      }
-    };
-    features.forEach(function(feature) {
-      var hiddenFeatures = feature.get('features');
-      console.log('Hidding', hiddenFeatures.length, hierarchy(feature));
-    });
+  var features = e.target.getFeatures();
+  console.log('Selected', features.getLength());
+  var hierarchy = function(feature) {
+    var hiddenFeatures = feature.get('features');
+    if (!hiddenFeatures || hiddenFeatures.length == 1) {
+      return feature.getId();
+    } else {
+      return hiddenFeatures.map(hierarchy);
+    }
+  };
+  features.forEach(function(feature) {
+    var hiddenFeatures = feature.get('features');
+    console.log('Hidding', hiddenFeatures.length, hierarchy(feature));
+  });
 });
 
+
+function exportClusterHierarchyAsGeoJSON() {
+  var features = clusterSource.getFeaturesWithFirstApparition();
+  features = features.map(function(f) {
+    var clone = f.clone();
+    clone.set('features', undefined); // FIXME: cannot remove
+    clone.setId(f.getId());
+    return clone;
+  });
+  var format = new ol.format.GeoJSON();
+  var str = format.writeFeatures(features);
+  console.log(str);
+}

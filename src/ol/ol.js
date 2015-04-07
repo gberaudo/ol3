@@ -104,7 +104,7 @@ ol.ENABLE_IMAGE = true;
  *     with Canvas renderer, which uses its own names, whether this is true or
  *     false.
  */
-ol.ENABLE_NAMED_COLORS = false;
+ol.ENABLE_NAMED_COLORS = true;
 
 
 /**

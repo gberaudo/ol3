@@ -79,7 +79,7 @@ var getText = function(feature, resolution, dom) {
   return text;
 };
 
-
+var useText = false;
 var createTextStyle = function(feature, resolution, dom) {
   var align = dom.align.value;
   var baseline = dom.baseline.value;
@@ -93,7 +93,7 @@ var createTextStyle = function(feature, resolution, dom) {
   var outlineColor = dom.outline.value;
   var outlineWidth = parseInt(dom.outlineWidth.value, 10);
 
-  return new ol.style.Text({
+  return useText ? new ol.style.Text({
     textAlign: align,
     textBaseline: baseline,
     font: font,
@@ -103,7 +103,7 @@ var createTextStyle = function(feature, resolution, dom) {
     offsetX: offsetX,
     offsetY: offsetY,
     rotation: rotation
-  });
+  }) : undefined;
 };
 
 
@@ -189,6 +189,7 @@ var map = new ol.Map({
     vectorPoints
   ],
   target: 'map',
+  renderer: exampleNS.getRendererFromQueryString(),
   view: new ol.View({
     center: [-8161939, 6095025],
     zoom: 8

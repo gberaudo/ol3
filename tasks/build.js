@@ -207,7 +207,13 @@ function build(config, paths, callback) {
     concatenate(paths, callback);
   } else {
     log.info('ol', 'Compiling ' + paths.length + ' sources');
+    if (options.compile.source_map_location_mapping &&
+        options.compile.source_map_location_mapping.split('|').length === 1) {
+      options.compile.source_map_location_mapping = options.cwd + '|' +
+          options.compile.source_map_location_mapping;
+     }
     options.compile.js = paths.concat(options.compile.js || []);
+    log.info('oooo', options);
     closure.compile(options, callback);
   }
 }

@@ -416,6 +416,17 @@ ol.format.GeoJSON.prototype.readFeatureFromObject = function(
     feature.setId(geoJSONFeature.id);
   }
   if (goog.isDef(geoJSONFeature.properties)) {
+    var extrude = geoJSONFeature.properties.extrude;
+    var base = geoJSONFeature.properties.base;
+    if (!!extrude) {
+      geometry.set('extrude', extrude);
+      delete geoJSONFeature.properties.extrude;
+    }
+    if (!!base) {
+      geometry.set('base', base);
+      delete geoJSONFeature.properties.base;
+    }
+
     feature.setProperties(geoJSONFeature.properties);
   }
   return feature;

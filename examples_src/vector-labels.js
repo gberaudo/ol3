@@ -4,6 +4,7 @@ goog.require('ol.View');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
+goog.require('ol.proj');
 goog.require('ol.source.MapQuest');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Circle');
@@ -191,8 +192,8 @@ var map = new ol.Map({
   target: 'map',
   renderer: exampleNS.getRendererFromQueryString(),
   view: new ol.View({
-    center: [-8161939, 6095025],
-    zoom: 8
+    center: ol.proj.fromLonLat([7.455089802259971, 46.93073538529751]),
+    zoom: 9
   })
 });
 

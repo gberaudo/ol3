@@ -12,6 +12,9 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
 
+var renderer = exampleNS.getRendererFromQueryString();
+var isWebgl = renderer && renderer[0].toLowerCase() == 'webgl';
+
 var style = new ol.style.Style({
   fill: new ol.style.Fill({
     color: 'rgba(255, 255, 255, 0.6)'
@@ -20,7 +23,7 @@ var style = new ol.style.Style({
     color: '#319FD3',
     width: 1
   }),
-  text: new ol.style.Text({
+  text: isWebgl ? undefined : new ol.style.Text({
     font: '12px Calibri,sans-serif',
     fill: new ol.style.Fill({
       color: '#000'
@@ -39,7 +42,9 @@ var vectorLayer = new ol.layer.Vector({
     format: new ol.format.GeoJSON()
   }),
   style: function(feature, resolution) {
-    style.getText().setText(resolution < 5000 ? feature.get('name') : '');
+    if (!isWebgl) {
+      style.getText().setText(resolution < 5000 ? feature.get('name') : '');
+    }
     return styles;
   }
 });
@@ -55,7 +60,8 @@ var map = new ol.Map({
   view: new ol.View({
     center: [0, 0],
     zoom: 1
-  })
+  }),
+  renderer: exampleNS.getRendererFromQueryString()
 });
 
 var highlightStyleCache = {};
@@ -73,7 +79,7 @@ var featureOverlay = new ol.FeatureOverlay({
         fill: new ol.style.Fill({
           color: 'rgba(255,0,0,0.1)'
         }),
-        text: new ol.style.Text({
+        text: isWebgl ? undefined : new ol.style.Text({
           font: '12px Calibri,sans-serif',
           text: text,
           fill: new ol.style.Fill({

@@ -1337,7 +1337,14 @@ ol.render.webgl.PolygonReplay.prototype.drawMultiPolygonGeometry =
   this.startIndicesFeature_.push(feature);
   var i, ii;
   for (i = 0, ii = coordinatess.length; i < ii; i++) {
-    this.drawCoordinates_(coordinatess[i]);
+    var coo = coordinatess[i];
+    this.drawCoordinates_(coo);
+    if (!goog.isNull(this.lineStringReplay_.strokeColor_)) {
+      var j, jj;
+      for (j = 0, jj = coo.length; j < jj; j++) {
+        this.lineStringReplay_.drawCoordinates_(coo[j]);
+      }
+    }
   }
 };
 
@@ -1356,10 +1363,9 @@ ol.render.webgl.PolygonReplay.prototype.drawPolygonGeometry =
   this.drawCoordinates_(coordinates);
 
   if (!goog.isNull(this.lineStringReplay_.strokeColor_)) {
-    var linearRings = polygonGeometry.getLinearRings();
     var i, ii;
-    for (i = 0, ii = linearRings.length; i < ii; i++) {
-      this.lineStringReplay_.drawCoordinates_(linearRings[i].getCoordinates());
+    for (i = 0, ii = coordinates.length; i < ii; i++) {
+      this.lineStringReplay_.drawCoordinates_(coordinates[i]);
     }
   }
 };

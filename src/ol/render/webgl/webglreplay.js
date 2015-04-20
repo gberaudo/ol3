@@ -1182,7 +1182,7 @@ ol.render.webgl.LineStringReplay.prototype.drawReplay_ =
   } else {
     var numItems = this.vertices_.length / 6;
     // FIXME: not compatible with batching, hardcoding some arbitrary value
-    gl.lineWidth(3);
+    gl.lineWidth(1);
     gl.drawArrays(goog.webgl.LINES, 0, numItems);
     gl.lineWidth(1);
   }

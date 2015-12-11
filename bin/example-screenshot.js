@@ -27,7 +27,7 @@
  *
  * As phantomjs doesn't support WebGL (see e.g.
  * https://github.com/ariya/phantomjs/wiki/Supported-Web-Standards and
- * http://code.google.com/p/phantomjs/issues/detail?id=273) This won't render
+ * https://github.com/ariya/phantomjs/issues/10273) This won't render
  * OpenLayers maps rendered through the webglrenderer.
  *
  * In parts based upon this gist: https://gist.github.com/crazy4groovy/3160121

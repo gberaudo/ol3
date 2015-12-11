@@ -4,7 +4,7 @@ Thanks for your interest in contributing to OpenLayers 3.
 
 ## Asking Questions
 
-Please ask questions about using the library on [stackoverflow using the tag 'openlayers-3'](http://stackoverflow.com/questions/tagged/openlayers-3).
+Please ask questions about using the library on [stackoverflow using the tag 'openlayers-3'](https://stackoverflow.com/questions/tagged/openlayers-3).
 
 When you want to get involved and discuss new features or changes, please use [the mailing list](https://groups.google.com/forum/#!forum/ol3-dev).
 

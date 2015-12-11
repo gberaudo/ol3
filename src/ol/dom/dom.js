@@ -30,7 +30,7 @@ ol.dom.createCanvasContext2D = function(opt_width, opt_height) {
 
 /**
  * Detect 2d transform.
- * Adapted from http://stackoverflow.com/q/5661671/130442
+ * Adapted from https://stackoverflow.com/q/5661671/130442
  * http://caniuse.com/#feat=transforms2d
  * @return {boolean}
  */
@@ -73,7 +73,7 @@ ol.dom.canUseCssTransform = (function() {
 
 /**
  * Detect 3d transform.
- * Adapted from http://stackoverflow.com/q/5661671/130442
+ * Adapted from https://stackoverflow.com/q/5661671/130442
  * http://caniuse.com/#feat=transforms3d
  * @return {boolean}
  */

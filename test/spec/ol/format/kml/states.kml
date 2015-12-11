@@ -7,7 +7,7 @@
 		<IconStyle>
 			<scale>0.4</scale>
 			<Icon>
-				<href>http://maps.google.com/mapfiles/kml/shapes/star.png</href>
+				<href>https://maps.google.com/mapfiles/kml/shapes/star.png</href>
 			</Icon>
 		</IconStyle>
 		<LabelStyle>

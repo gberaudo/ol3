@@ -1647,7 +1647,7 @@ describe('ol.format.KML', function() {
             '    <IconStyle>' +
             '      <scale>0.3</scale>' +
             '      <Icon>' +
-            '        <href>http://maps.google.com/mapfiles/kml/pushpin/' +
+            '        <href>https://maps.google.com/mapfiles/kml/pushpin/' +
             'ylw-pushpin.png</href>' +
             '      </Icon>' +
             '      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>' +
@@ -1696,7 +1696,7 @@ describe('ol.format.KML', function() {
             '    <IconStyle>' +
             '      <scale>0.3</scale>' +
             '      <Icon>' +
-            '        <href>http://maps.google.com/mapfiles/kml/pushpin/' +
+            '        <href>https://maps.google.com/mapfiles/kml/pushpin/' +
             'ylw-pushpin.png</href>' +
             '      </Icon>' +
             '      <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>' +

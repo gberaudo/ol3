@@ -35,7 +35,7 @@ describe('ol.source.TileJSON', function() {
         };
       };
       source = new ol.source.TileJSON({
-        url: 'http://api.tiles.mapbox.com/v3/mapbox.geography-class.jsonp'
+        url: 'https://api.tiles.mapbox.com/v3/mapbox.geography-class.jsonp'
       });
       goog.net.Jsonp = googNetJsonp;
       var key = source.on('change', function() {

@@ -47,7 +47,7 @@ var layers = [
   new ol.layer.Tile({
     extent: extent,
     source: new ol.source.TileWMS({
-      url: 'http://wms.geo.admin.ch/',
+      url: 'https://wms.geo.admin.ch/',
       crossOrigin: 'anonymous',
       attributions: [new ol.Attribution({
         html: '&copy; ' +
@@ -65,7 +65,7 @@ var layers = [
   new ol.layer.Tile({
     extent: extent,
     source: new ol.source.TileWMS({
-      url: 'http://wms.geo.admin.ch/',
+      url: 'https://wms.geo.admin.ch/',
       crossOrigin: 'anonymous',
       attributions: [new ol.Attribution({
         html: '&copy; ' +

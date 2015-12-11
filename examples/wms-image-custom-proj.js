@@ -34,7 +34,7 @@ var layers = [
   new ol.layer.Image({
     extent: extent,
     source: new ol.source.ImageWMS({
-      url: 'http://wms.geo.admin.ch/',
+      url: 'https://wms.geo.admin.ch/',
       crossOrigin: 'anonymous',
       attributions: [new ol.Attribution({
         html: '&copy; ' +
@@ -52,7 +52,7 @@ var layers = [
   new ol.layer.Image({
     extent: extent,
     source: new ol.source.ImageWMS({
-      url: 'http://wms.geo.admin.ch/',
+      url: 'https://wms.geo.admin.ch/',
       crossOrigin: 'anonymous',
       attributions: [new ol.Attribution({
         html: '&copy; ' +

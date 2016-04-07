@@ -45,7 +45,7 @@ ol.source.SourceOptions;
  */
 ol.source.Source = function(options) {
 
-  goog.base(this);
+  ol.Object.call(this);
 
   /**
    * @private
@@ -79,7 +79,7 @@ ol.source.Source = function(options) {
   this.wrapX_ = options.wrapX !== undefined ? options.wrapX : false;
 
 };
-goog.inherits(ol.source.Source, ol.Object);
+ol.inherits(ol.source.Source, ol.Object);
 
 /**
  * Turns various ways of defining an attribution to an array of `ol.Attributions`.

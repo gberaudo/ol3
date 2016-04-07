@@ -172,7 +172,7 @@ ol.source.WMTS = function(options) {
           urls.map(createFromWMTSTemplate)) :
       ol.TileUrlFunction.nullTileUrlFunction;
 
-  goog.base(this, {
+  ol.source.TileImage.call(this, {
     attributions: options.attributions,
     cacheSize: options.cacheSize,
     crossOrigin: options.crossOrigin,
@@ -189,7 +189,7 @@ ol.source.WMTS = function(options) {
   });
 
 };
-goog.inherits(ol.source.WMTS, ol.source.TileImage);
+ol.inherits(ol.source.WMTS, ol.source.TileImage);
 
 
 /**

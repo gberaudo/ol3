@@ -98,7 +98,7 @@ ol.ViewHint = {
  * @api stable
  */
 ol.View = function(opt_options) {
-  goog.base(this);
+  ol.Object.call(this);
   var options = opt_options || {};
 
   /**
@@ -163,7 +163,7 @@ ol.View = function(opt_options) {
       options.rotation !== undefined ? options.rotation : 0;
   this.setProperties(properties);
 };
-goog.inherits(ol.View, ol.Object);
+ol.inherits(ol.View, ol.Object);
 
 
 /**

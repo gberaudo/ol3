@@ -40,7 +40,7 @@ ol.source.UrlTileOptions;
  */
 ol.source.UrlTile = function(options) {
 
-  goog.base(this, {
+  ol.source.Tile.call(this, {
     attributions: options.attributions,
     cacheSize: options.cacheSize,
     extent: options.extent,
@@ -83,7 +83,7 @@ ol.source.UrlTile = function(options) {
   }
 
 };
-goog.inherits(ol.source.UrlTile, ol.source.Tile);
+ol.inherits(ol.source.UrlTile, ol.source.Tile);
 
 
 /**

@@ -60,7 +60,7 @@ ol.control.Zoom = function(opt_options) {
       ol.css.CLASS_CONTROL;
   var element = goog.dom.createDom('DIV', cssClasses, inElement, outElement);
 
-  goog.base(this, {
+  ol.control.Control.call(this, {
     element: element,
     target: options.target
   });
@@ -72,7 +72,7 @@ ol.control.Zoom = function(opt_options) {
   this.duration_ = options.duration !== undefined ? options.duration : 250;
 
 };
-goog.inherits(ol.control.Zoom, ol.control.Control);
+ol.inherits(ol.control.Zoom, ol.control.Control);
 
 
 /**

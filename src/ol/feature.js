@@ -57,7 +57,7 @@ goog.require('ol.style.Style');
  */
 ol.Feature = function(opt_geometryOrProperties) {
 
-  goog.base(this);
+  ol.Object.call(this);
 
   /**
    * @private
@@ -109,7 +109,7 @@ ol.Feature = function(opt_geometryOrProperties) {
     }
   }
 };
-goog.inherits(ol.Feature, ol.Object);
+ol.inherits(ol.Feature, ol.Object);
 
 
 /**

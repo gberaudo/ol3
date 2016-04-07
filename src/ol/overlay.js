@@ -70,7 +70,7 @@ ol.OverlayPositioning = {
  */
 ol.Overlay = function(options) {
 
-  goog.base(this);
+  ol.Object.call(this);
 
   /**
    * @private
@@ -176,7 +176,7 @@ ol.Overlay = function(options) {
   }
 
 };
-goog.inherits(ol.Overlay, ol.Object);
+ol.inherits(ol.Overlay, ol.Object);
 
 
 /**

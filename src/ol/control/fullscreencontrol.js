@@ -156,7 +156,7 @@ ol.control.FullScreen.prototype.setMap = function(map) {
   ol.control.Control.prototype.setMap.call(this, map);
   if (map) {
     this.listenerKeys.push(
-        ol.events.listen(goog.global.document, goog.dom.fullscreen.EventType.CHANGE,
+        ol.events.listen(ol.global.document, goog.dom.fullscreen.EventType.CHANGE,
           this.handleFullScreenChange_, this)
     );
   }

@@ -273,3 +273,6 @@ ol.inherits = function(childCtor, parentCtor) {
  * @return {undefined} Nothing.
  */
 ol.nullFunction = function() {};
+
+
+ol.global = Function('return this')();

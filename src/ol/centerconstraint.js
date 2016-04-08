@@ -1,20 +1,15 @@
-goog.provide('ol.CenterConstraint');
-goog.provide('ol.CenterConstraintType');
+goog.module('ol.CenterConstraint');
+goog.module.declareLegacyNamespace();
 
+goog.require('ol.CenterConstraintType');
 goog.require('ol.math');
-
-
-/**
- * @typedef {function((ol.Coordinate|undefined)): (ol.Coordinate|undefined)}
- */
-ol.CenterConstraintType;
 
 
 /**
  * @param {ol.Extent} extent Extent.
  * @return {ol.CenterConstraintType} The constraint.
  */
-ol.CenterConstraint.createExtent = function(extent) {
+exports.createExtent = function(extent) {
   return (
       /**
        * @param {ol.Coordinate|undefined} center Center.
@@ -37,6 +32,6 @@ ol.CenterConstraint.createExtent = function(extent) {
  * @param {ol.Coordinate|undefined} center Center.
  * @return {ol.Coordinate|undefined} Center.
  */
-ol.CenterConstraint.none = function(center) {
+exports.none = function(center) {
   return center;
 };

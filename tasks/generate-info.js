@@ -201,11 +201,11 @@ var getProvides = async.memoize(function(srcPath, callback) {
       return;
     }
     var provides = [];
-    var matcher = /goog\.provide\('(.*)'\)/;
+    var matcher = /goog\.(provide|module)\('(.*)'\)/;
     String(data).split('\n').forEach(function(line) {
       var match = line.match(matcher);
       if (match) {
-        provides.push(match[1]);
+        provides.push(match[2]);
       }
     });
     callback(null, provides);

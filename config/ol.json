@@ -15,6 +15,7 @@
       "externs/topojson.js"
     ],
     "define": [
+      "goog.SEAL_MODULE_EXPORTS=false",
       "goog.dom.ASSUME_STANDARDS_MODE=true",
       "goog.DEBUG=false"
     ],

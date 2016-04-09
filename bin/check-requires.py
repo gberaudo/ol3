@@ -174,6 +174,7 @@ def check_requires(closure_lib, *filenames):
         if m:
             uses.discard('ol.renderer.Map')
             uses.discard('ol.renderer.%s.Map' % (m.group(1),))
+        uses.discard('goog.module');
         missing_requires = uses - requires - provides
         if missing_requires:
             for missing_require in sorted(missing_requires):

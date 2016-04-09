@@ -15,6 +15,7 @@
       "externs/topojson.js"
     ],
     "define": [
+      "goog.SEAL_MODULE_EXPORTS=false",
       "goog.DEBUG=false"
     ],
     "jscomp_error": [

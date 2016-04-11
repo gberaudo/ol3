@@ -1,5 +1,7 @@
 goog.provide('ol.events.Event');
 
+goog.require('ol');
+
 
 /**
  * @classdesc

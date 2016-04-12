@@ -3,25 +3,15 @@
 // causes occasional loss of precision and rounding errors, especially in the
 // alpha channel.
 
-goog.provide('ol.Color');
-goog.provide('ol.color');
+goog.module('ol.color');
+goog.module.declareLegacyNamespace();
 
 goog.require('goog.asserts');
 goog.require('goog.color');
 goog.require('goog.color.names');
 goog.require('ol');
+goog.require('ol.Color');
 goog.require('ol.math');
-
-
-/**
- * A color represented as a short array [red, green, blue, alpha].
- * red, green, and blue should be integers in the range 0..255 inclusive.
- * alpha should be a float in the range 0..1 inclusive. If no alpha value is
- * given then `1` will be used.
- * @typedef {Array.<number>}
- * @api
- */
-ol.Color;
 
 
 /**
@@ -30,7 +20,7 @@ ol.Color;
  * @type {RegExp}
  * @private
  */
-ol.color.hexColorRe_ = /^#(?:[0-9a-f]{3}){1,2}$/i;
+exports.hexColorRe_ = /^#(?:[0-9a-f]{3}){1,2}$/i;
 
 
 /**
@@ -39,7 +29,7 @@ ol.color.hexColorRe_ = /^#(?:[0-9a-f]{3}){1,2}$/i;
  * @type {RegExp}
  * @private
  */
-ol.color.rgbColorRe_ =
+exports.rgbColorRe_ =
     /^(?:rgb)?\((0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2})\)$/i;
 
 
@@ -49,7 +39,7 @@ ol.color.rgbColorRe_ =
  * @type {RegExp}
  * @private
  */
-ol.color.rgbaColorRe_ =
+exports.rgbaColorRe_ =
     /^(?:rgba)?\((0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2}),\s?(0|1|0\.\d{0,10})\)$/i;
 
 
@@ -60,12 +50,12 @@ ol.color.rgbaColorRe_ =
  * @return {ol.Color} Color.
  * @api
  */
-ol.color.asArray = function(color) {
+exports.asArray = function(color) {
   if (Array.isArray(color)) {
     return color;
   } else {
     goog.asserts.assert(typeof color === 'string', 'Color should be a string');
-    return ol.color.fromString(color);
+    return exports.fromString(color);
   }
 };
 
@@ -76,12 +66,12 @@ ol.color.asArray = function(color) {
  * @return {string} Rgba string.
  * @api
  */
-ol.color.asString = function(color) {
+exports.asString = function(color) {
   if (typeof color === 'string') {
     return color;
   } else {
     goog.asserts.assert(Array.isArray(color), 'Color should be an array');
-    return ol.color.toString(color);
+    return exports.toString(color);
   }
 };
 
@@ -90,7 +80,7 @@ ol.color.asString = function(color) {
  * @param {string} s String.
  * @return {ol.Color} Color.
  */
-ol.color.fromString = (
+exports.fromString = (
     function() {
 
       // We maintain a small cache of parsed strings.  To provide cheap LRU-like
@@ -133,7 +123,7 @@ ol.color.fromString = (
                   }
                 }
               }
-              color = ol.color.fromStringInternal_(s);
+              color = exports.fromStringInternal_(s);
               cache[s] = color;
               ++cacheSize;
             }
@@ -148,7 +138,7 @@ ol.color.fromString = (
  * @private
  * @return {ol.Color} Color.
  */
-ol.color.fromStringInternal_ = function(s) {
+exports.fromStringInternal_ = function(s) {
 
   var isHex = false;
   if (ol.ENABLE_NAMED_COLORS && goog.color.names.hasOwnProperty(s)) {
@@ -157,7 +147,7 @@ ol.color.fromStringInternal_ = function(s) {
   }
 
   var r, g, b, a, color, match;
-  if (isHex || (match = ol.color.hexColorRe_.exec(s))) { // hex
+  if (isHex || (match = exports.hexColorRe_.exec(s))) { // hex
     var n = s.length - 1; // number of hex digits
     goog.asserts.assert(n == 3 || n == 6,
         'Color string length should be 3 or 6');
@@ -172,22 +162,22 @@ ol.color.fromStringInternal_ = function(s) {
     }
     a = 1;
     color = [r, g, b, a];
-    goog.asserts.assert(ol.color.isValid(color),
+    goog.asserts.assert(exports.isValid(color),
         'Color should be a valid color');
     return color;
-  } else if ((match = ol.color.rgbaColorRe_.exec(s))) { // rgba()
+  } else if ((match = exports.rgbaColorRe_.exec(s))) { // rgba()
     r = Number(match[1]);
     g = Number(match[2]);
     b = Number(match[3]);
     a = Number(match[4]);
     color = [r, g, b, a];
-    return ol.color.normalize(color, color);
-  } else if ((match = ol.color.rgbColorRe_.exec(s))) { // rgb()
+    return exports.normalize(color, color);
+  } else if ((match = exports.rgbColorRe_.exec(s))) { // rgb()
     r = Number(match[1]);
     g = Number(match[2]);
     b = Number(match[3]);
     color = [r, g, b, 1];
-    return ol.color.normalize(color, color);
+    return exports.normalize(color, color);
   } else {
     goog.asserts.fail(s + ' is not a valid color');
   }
@@ -199,7 +189,7 @@ ol.color.fromStringInternal_ = function(s) {
  * @param {ol.Color} color Color.
  * @return {boolean} Is valid.
  */
-ol.color.isValid = function(color) {
+exports.isValid = function(color) {
   return 0 <= color[0] && color[0] < 256 &&
       0 <= color[1] && color[1] < 256 &&
       0 <= color[2] && color[2] < 256 &&
@@ -212,7 +202,7 @@ ol.color.isValid = function(color) {
  * @param {ol.Color=} opt_color Color.
  * @return {ol.Color} Clamped color.
  */
-ol.color.normalize = function(color, opt_color) {
+exports.normalize = function(color, opt_color) {
   var result = opt_color || [];
   result[0] = ol.math.clamp((color[0] + 0.5) | 0, 0, 255);
   result[1] = ol.math.clamp((color[1] + 0.5) | 0, 0, 255);
@@ -226,7 +216,7 @@ ol.color.normalize = function(color, opt_color) {
  * @param {ol.Color} color Color.
  * @return {string} String.
  */
-ol.color.toString = function(color) {
+exports.toString = function(color) {
   var r = color[0];
   if (r != (r | 0)) {
     r = (r + 0.5) | 0;

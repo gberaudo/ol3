@@ -3,6 +3,7 @@ goog.provide('ol.source.State');
 
 goog.require('ol');
 goog.require('ol.Attribution');
+goog.require('ol.AttributionLike');
 goog.require('ol.Object');
 goog.require('ol.proj');
 

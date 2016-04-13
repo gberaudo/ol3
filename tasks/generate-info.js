@@ -1,3 +1,4 @@
+var assert = require('assert');
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('child_process').spawn;
@@ -16,6 +17,7 @@ var infoPath = path.join(__dirname, '..', 'build', 'info.json');
 
 var jsdocResolved = require.resolve('jsdoc/jsdoc.js');
 var jsdoc = path.resolve(path.dirname(jsdocResolved), '../.bin/jsdoc');
+
 
 // on Windows, use jsdoc.cmd
 if (isWindows) {
@@ -189,7 +191,8 @@ function spawnJSDoc(paths, callback) {
 
 
 /**
- * Given the path to a source file, get the list of provides.
+ * Given the path to a source file, get the list of provides and if
+ * the symbol is in a module.
  * @param {string} srcPath Path to source file.
  * @param {function(Error, Array.<string>)} callback Called with a list of
  *     provides or any error.
@@ -200,15 +203,18 @@ var getProvides = async.memoize(function(srcPath, callback) {
       callback(err);
       return;
     }
+    var module = false;
     var provides = [];
     var matcher = /goog\.(provide|module)\('(.*)'\)/;
+    var moduleMatcher = /goog\.(module)\('(.*)'\)/;
     String(data).split('\n').forEach(function(line) {
       var match = line.match(matcher);
       if (match) {
         provides.push(match[2]);
       }
+      module = module || !!line.match(moduleMatcher);
     });
-    callback(null, provides);
+    callback(null, provides, module);
   });
 });
 
@@ -227,12 +233,21 @@ function addSymbolProvides(info, callback) {
   }
 
   function addProvides(symbol, callback) {
-    getProvides(symbol.path, function(err, provides) {
+    getProvides(symbol.path, function(err, provides, module) {
       if (err) {
         callback(err);
         return;
       }
       symbol.provides = provides;
+      symbol.module = module;
+      if (module) {
+        var moduleName = symbol.provides[0];
+        assert(symbol.name === '' | symbol.name[0] === '#',
+            'Bad symbol name' + symbol.name + ' in module ' + moduleName);
+        // Symbol name as returned by jsdoc is wrong for modules.
+        // Fixing them using the module name.
+        symbol.name = moduleName + symbol.name;
+      }
       callback(null, symbol);
     });
   }

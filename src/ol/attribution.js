@@ -1,14 +1,8 @@
-goog.provide('ol.Attribution');
+goog.module('ol.Attribution');
+goog.module.declareLegacyNamespace();
 
 goog.require('ol.TileRange');
 goog.require('ol.math');
-
-
-/**
- * @typedef {string|Array.<string>|ol.Attribution|Array.<ol.Attribution>}
- * @api
- */
-ol.AttributionLike;
 
 
 /**
@@ -32,7 +26,7 @@ ol.AttributionLike;
  * @struct
  * @api stable
  */
-ol.Attribution = function(options) {
+exports = function(options) {
 
   /**
    * @private
@@ -54,7 +48,7 @@ ol.Attribution = function(options) {
  * @return {string} The attribution HTML.
  * @api stable
  */
-ol.Attribution.prototype.getHTML = function() {
+exports.prototype.getHTML = function() {
   return this.html_;
 };
 
@@ -65,7 +59,7 @@ ol.Attribution.prototype.getHTML = function() {
  * @param {!ol.proj.Projection} projection Projection.
  * @return {boolean} Intersects any tile range.
  */
-ol.Attribution.prototype.intersectsAnyTileRange = function(tileRanges, tileGrid, projection) {
+exports.prototype.intersectsAnyTileRange = function(tileRanges, tileGrid, projection) {
   if (!this.tileRanges_) {
     return true;
   }

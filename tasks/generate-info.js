@@ -1,4 +1,3 @@
-var assert = require('assert');
 var fs = require('fs-extra');
 var path = require('path');
 var spawn = require('child_process').spawn;
@@ -242,10 +241,15 @@ function addSymbolProvides(info, callback) {
       symbol.module = module;
       if (module) {
         var moduleName = symbol.provides[0];
-        assert(symbol.name === '' | symbol.name[0] === '#',
-            'Bad symbol name' + symbol.name + ' in module ' + moduleName);
-        // Symbol name as returned by jsdoc is wrong for modules.
-        // Fixing them using the module name.
+        // constructors are ''
+        // properties and methods are '#something'
+        // FIXME: is this logics implementable in the jsodc extractor?
+        if (symbol.name && symbol.name[0] !== '#') {
+          symbol.name = '#' + symbol.name;
+        }
+        // FIXME: handle inheritance
+
+        // Prepending module name
         symbol.name = moduleName + symbol.name;
       }
       callback(null, symbol);

@@ -10,7 +10,6 @@ goog.require('goog.asserts');
 goog.require('goog.color');
 goog.require('goog.color.names');
 goog.require('ol');
-goog.require('ol.Color');
 goog.require('ol.math');
 
 

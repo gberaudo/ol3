@@ -32,6 +32,8 @@ exports.publish = function(data, opts) {
         function() {
           if (this.kind == 'class') {
             if (!('extends' in this) || typeof this.api == 'string') {
+              assert(!(classes[this.longname]),
+                  'The class ' + this.longname + ' was already handled XX', JSON.stringify(this, null, '\t'));
               classes[this.longname] = this;
               return true;
             }
@@ -95,6 +97,7 @@ exports.publish = function(data, opts) {
         kind: doc.kind,
         description: doc.classdesc || doc.description,
         stability: doc.api,
+        inherited: doc.inherited,
         path: path.join(doc.meta.path, doc.meta.filename)
       };
       if (doc.augments) {

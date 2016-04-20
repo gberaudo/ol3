@@ -10,6 +10,7 @@
         "includePattern": "\\.js$"
     },
     "plugins": [
+        "config/jsdoc/info/module-plugin",
         "config/jsdoc/info/api-plugin",
         "config/jsdoc/info/define-plugin",
         "config/jsdoc/info/virtual-plugin"

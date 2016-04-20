@@ -238,26 +238,16 @@ function addSymbolProvides(info, callback) {
         return;
       }
       symbol.provides = provides;
-      symbol.module = module;
-      if (module) {
-        var moduleName = symbol.provides[0];
-        // constructors are ''
-        // properties and methods are '#something'
-        // FIXME: is this logics implementable in the jsodc extractor?
-        if (symbol.name && symbol.name[0] !== '#') {
-          symbol.name = '#' + symbol.name;
-        }
-        // FIXME: handle inheritance
-
-        // Prepending module name
-        symbol.name = moduleName + symbol.name;
-      }
       callback(null, symbol);
     });
   }
 
   async.map(info.symbols, addProvides, function(err, newSymbols) {
-    info.symbols = newSymbols;
+    info.symbols = newSymbols.filter(function(symbol) {
+      // in case of inherited symbol, doclets are generate by jsdoc; however
+      // they do not contain information about the superclass file / type.
+      return !symbol.inherited;
+    });
     callback(err, info);
   });
 }

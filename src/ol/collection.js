@@ -14,7 +14,7 @@ goog.require('ol.Object');
 /**
  * @enum {string}
  */
-ol.CollectionProperty = {
+var CollectionProperty = {
   LENGTH: 'length'
 };
 
@@ -122,7 +122,7 @@ exports.prototype.item = function(index) {
  * @api stable
  */
 exports.prototype.getLength = function() {
-  return /** @type {number} */ (this.get(ol.CollectionProperty.LENGTH));
+  return /** @type {number} */ (this.get(CollectionProperty.LENGTH));
 };
 
 
@@ -228,5 +228,5 @@ exports.prototype.setAt = function(index, elem) {
  * @private
  */
 exports.prototype.updateLength_ = function() {
-  this.set(ol.CollectionProperty.LENGTH, this.array_.length);
+  this.set(CollectionProperty.LENGTH, this.array_.length);
 };

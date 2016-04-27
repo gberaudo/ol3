@@ -1032,7 +1032,6 @@ describe('ol.tilegrid.TileGrid', function() {
 
 goog.require('ol.Coordinate');
 goog.require('ol.extent');
-goog.require('ol.extent.Corner');
 goog.require('ol.proj');
 goog.require('ol.proj.METERS_PER_UNIT');
 goog.require('ol.proj');

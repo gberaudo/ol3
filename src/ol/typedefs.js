@@ -29,4 +29,12 @@ ol.source.ImageOptions;
  * @typedef {Array.<number>}
  * @api
  */
-ol.Color;
+ol.Color
+
+
+/**
+ * An array of numbers representing an extent: `[minx, miny, maxx, maxy]`.
+ * @typedef {Array.<number>}
+ * @api stable
+ */
+ol.Extent;

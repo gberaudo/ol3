@@ -7,7 +7,6 @@ goog.require('ol.TileCoord');
 goog.require('ol.TileRange');
 goog.require('ol.array');
 goog.require('ol.extent');
-goog.require('ol.extent.Corner');
 goog.require('ol.math');
 goog.require('ol.object');
 goog.require('ol.proj');

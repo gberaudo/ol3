@@ -1,5 +1,5 @@
-goog.provide('ol.DeviceOrientation');
-goog.provide('ol.DeviceOrientationProperty');
+goog.module('ol.DeviceOrientation');
+goog.module.declareLegacyNamespace();
 
 goog.require('ol.events');
 goog.require('ol');
@@ -11,7 +11,7 @@ goog.require('ol.math');
 /**
  * @enum {string}
  */
-ol.DeviceOrientationProperty = {
+var DeviceOrientationProperty = {
   ALPHA: 'alpha',
   BETA: 'beta',
   GAMMA: 'gamma',
@@ -75,9 +75,9 @@ ol.DeviceOrientationProperty = {
  * @param {olx.DeviceOrientationOptions=} opt_options Options.
  * @api
  */
-ol.DeviceOrientation = function(opt_options) {
+exports = function(opt_options) {
 
-  goog.base(this);
+  ol.Object.call(this);
 
   var options = opt_options ? opt_options : {};
 
@@ -88,19 +88,19 @@ ol.DeviceOrientation = function(opt_options) {
   this.listenerKey_ = null;
 
   ol.events.listen(this,
-      ol.Object.getChangeEventType(ol.DeviceOrientationProperty.TRACKING),
+      ol.Object.getChangeEventType(DeviceOrientationProperty.TRACKING),
       this.handleTrackingChanged_, this);
 
   this.setTracking(options.tracking !== undefined ? options.tracking : false);
 
 };
-goog.inherits(ol.DeviceOrientation, ol.Object);
+ol.inherits(exports, ol.Object);
 
 
 /**
  * @inheritDoc
  */
-ol.DeviceOrientation.prototype.disposeInternal = function() {
+exports.prototype.disposeInternal = function() {
   this.setTracking(false);
   goog.base(this, 'disposeInternal');
 };
@@ -110,26 +110,26 @@ ol.DeviceOrientation.prototype.disposeInternal = function() {
  * @private
  * @param {Event} originalEvent Event.
  */
-ol.DeviceOrientation.prototype.orientationChange_ = function(originalEvent) {
+exports.prototype.orientationChange_ = function(originalEvent) {
   var event = /** @type {DeviceOrientationEvent} */ (originalEvent);
   if (event.alpha !== null) {
     var alpha = ol.math.toRadians(event.alpha);
-    this.set(ol.DeviceOrientationProperty.ALPHA, alpha);
+    this.set(DeviceOrientationProperty.ALPHA, alpha);
     // event.absolute is undefined in iOS.
     if (typeof event.absolute === 'boolean' && event.absolute) {
-      this.set(ol.DeviceOrientationProperty.HEADING, alpha);
+      this.set(DeviceOrientationProperty.HEADING, alpha);
     } else if (goog.isNumber(event.webkitCompassHeading) &&
                event.webkitCompassAccuracy != -1) {
       var heading = ol.math.toRadians(event.webkitCompassHeading);
-      this.set(ol.DeviceOrientationProperty.HEADING, heading);
+      this.set(DeviceOrientationProperty.HEADING, heading);
     }
   }
   if (event.beta !== null) {
-    this.set(ol.DeviceOrientationProperty.BETA,
+    this.set(DeviceOrientationProperty.BETA,
         ol.math.toRadians(event.beta));
   }
   if (event.gamma !== null) {
-    this.set(ol.DeviceOrientationProperty.GAMMA,
+    this.set(DeviceOrientationProperty.GAMMA,
         ol.math.toRadians(event.gamma));
   }
   this.changed();
@@ -143,9 +143,9 @@ ol.DeviceOrientation.prototype.orientationChange_ = function(originalEvent) {
  * @observable
  * @api
  */
-ol.DeviceOrientation.prototype.getAlpha = function() {
+exports.prototype.getAlpha = function() {
   return /** @type {number|undefined} */ (
-      this.get(ol.DeviceOrientationProperty.ALPHA));
+      this.get(DeviceOrientationProperty.ALPHA));
 };
 
 
@@ -156,9 +156,9 @@ ol.DeviceOrientation.prototype.getAlpha = function() {
  * @observable
  * @api
  */
-ol.DeviceOrientation.prototype.getBeta = function() {
+exports.prototype.getBeta = function() {
   return /** @type {number|undefined} */ (
-      this.get(ol.DeviceOrientationProperty.BETA));
+      this.get(DeviceOrientationProperty.BETA));
 };
 
 
@@ -169,9 +169,9 @@ ol.DeviceOrientation.prototype.getBeta = function() {
  * @observable
  * @api
  */
-ol.DeviceOrientation.prototype.getGamma = function() {
+exports.prototype.getGamma = function() {
   return /** @type {number|undefined} */ (
-      this.get(ol.DeviceOrientationProperty.GAMMA));
+      this.get(DeviceOrientationProperty.GAMMA));
 };
 
 
@@ -182,9 +182,9 @@ ol.DeviceOrientation.prototype.getGamma = function() {
  * @observable
  * @api
  */
-ol.DeviceOrientation.prototype.getHeading = function() {
+exports.prototype.getHeading = function() {
   return /** @type {number|undefined} */ (
-      this.get(ol.DeviceOrientationProperty.HEADING));
+      this.get(DeviceOrientationProperty.HEADING));
 };
 
 
@@ -194,16 +194,16 @@ ol.DeviceOrientation.prototype.getHeading = function() {
  * @observable
  * @api
  */
-ol.DeviceOrientation.prototype.getTracking = function() {
+exports.prototype.getTracking = function() {
   return /** @type {boolean} */ (
-      this.get(ol.DeviceOrientationProperty.TRACKING));
+      this.get(DeviceOrientationProperty.TRACKING));
 };
 
 
 /**
  * @private
  */
-ol.DeviceOrientation.prototype.handleTrackingChanged_ = function() {
+exports.prototype.handleTrackingChanged_ = function() {
   if (ol.has.DEVICE_ORIENTATION) {
     var tracking = this.getTracking();
     if (tracking && !this.listenerKey_) {
@@ -224,6 +224,6 @@ ol.DeviceOrientation.prototype.handleTrackingChanged_ = function() {
  * @observable
  * @api
  */
-ol.DeviceOrientation.prototype.setTracking = function(tracking) {
-  this.set(ol.DeviceOrientationProperty.TRACKING, tracking);
+exports.prototype.setTracking = function(tracking) {
+  this.set(DeviceOrientationProperty.TRACKING, tracking);
 };

@@ -1,5 +1,5 @@
-goog.provide('ol.webgl');
-goog.provide('ol.webgl.WebGLContextEventType');
+goog.module('ol.webgl');
+goog.module.declareLegacyNamespace();
 
 
 /**
@@ -7,7 +7,7 @@ goog.provide('ol.webgl.WebGLContextEventType');
  * @private
  * @type {Array.<string>}
  */
-ol.webgl.CONTEXT_IDS_ = [
+var CONTEXT_IDS_ = [
   'experimental-webgl',
   'webgl',
   'webkit-3d',
@@ -18,7 +18,7 @@ ol.webgl.CONTEXT_IDS_ = [
 /**
  * @enum {string}
  */
-ol.webgl.WebGLContextEventType = {
+exports.WebGLContextEventType = {
   LOST: 'webglcontextlost',
   RESTORED: 'webglcontextrestored'
 };
@@ -29,11 +29,11 @@ ol.webgl.WebGLContextEventType = {
  * @param {Object=} opt_attributes Attributes.
  * @return {WebGLRenderingContext} WebGL rendering context.
  */
-ol.webgl.getContext = function(canvas, opt_attributes) {
-  var context, i, ii = ol.webgl.CONTEXT_IDS_.length;
+exports.getContext = function(canvas, opt_attributes) {
+  var context, i, ii = CONTEXT_IDS_.length;
   for (i = 0; i < ii; ++i) {
     try {
-      context = canvas.getContext(ol.webgl.CONTEXT_IDS_[i], opt_attributes);
+      context = canvas.getContext(CONTEXT_IDS_[i], opt_attributes);
       if (context) {
         return /** @type {!WebGLRenderingContext} */ (context);
       }

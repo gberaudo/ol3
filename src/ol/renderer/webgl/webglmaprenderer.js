@@ -30,7 +30,6 @@ goog.require('ol.structs.LRUCache');
 goog.require('ol.structs.PriorityQueue');
 goog.require('ol.webgl');
 goog.require('ol.webgl.Context');
-goog.require('ol.webgl.WebGLContextEventType');
 
 
 /**

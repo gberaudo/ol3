@@ -26,5 +26,5 @@ after_success:
   - "cat coverage/lcov.info | ./node_modules/.bin/coveralls"
 
 branches:
-  only:
+  except:
     - master

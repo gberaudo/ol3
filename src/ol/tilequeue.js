@@ -1,18 +1,10 @@
-goog.provide('ol.TilePriorityFunction');
 goog.provide('ol.TileQueue');
 
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.events.EventType');
-goog.require('ol.Coordinate');
 goog.require('ol.TileState');
 goog.require('ol.structs.PriorityQueue');
-
-
-/**
- * @typedef {function(ol.Tile, string, ol.Coordinate, number): number}
- */
-ol.TilePriorityFunction;
 
 
 /**

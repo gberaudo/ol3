@@ -1,5 +1,4 @@
 goog.provide('ol.reproj.Image');
-goog.provide('ol.reproj.ImageFunctionType');
 
 goog.require('goog.asserts');
 goog.require('ol.events');
@@ -10,12 +9,6 @@ goog.require('ol.extent');
 goog.require('ol.proj');
 goog.require('ol.reproj');
 goog.require('ol.reproj.Triangulation');
-
-
-/**
- * @typedef {function(ol.Extent, number, number) : ol.ImageBase}
- */
-ol.reproj.ImageFunctionType;
 
 
 /**

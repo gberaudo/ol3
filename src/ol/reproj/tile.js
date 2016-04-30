@@ -1,5 +1,4 @@
 goog.provide('ol.reproj.Tile');
-goog.provide('ol.reproj.TileFunctionType');
 
 goog.require('goog.asserts');
 goog.require('ol.Tile');
@@ -12,12 +11,6 @@ goog.require('ol.object');
 goog.require('ol.proj');
 goog.require('ol.reproj');
 goog.require('ol.reproj.Triangulation');
-
-
-/**
- * @typedef {function(number, number, number, number) : ol.Tile}
- */
-ol.reproj.TileFunctionType;
 
 
 /**

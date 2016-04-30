@@ -11,7 +11,6 @@ goog.require('goog.dom.NodeType');
 goog.require('goog.object');
 goog.require('ol');
 goog.require('ol.Feature');
-goog.require('ol.FeatureStyleFunction');
 goog.require('ol.array');
 goog.require('ol.color');
 goog.require('ol.format.Feature');
@@ -40,20 +39,6 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 goog.require('ol.xml');
-
-
-/**
- * @typedef {{x: number, xunits: (ol.style.IconAnchorUnits|undefined),
- *            y: number, yunits: (ol.style.IconAnchorUnits|undefined)}}
- */
-ol.format.KMLVec2_;
-
-
-/**
- * @typedef {{flatCoordinates: Array.<number>,
- *            whens: Array.<number>}}
- */
-ol.format.KMLGxTrackObject_;
 
 
 /**

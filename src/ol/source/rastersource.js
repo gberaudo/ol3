@@ -445,14 +445,6 @@ ol.source.Raster.createTileRenderer_ = function(source) {
 
 
 /**
- * @typedef {{revision: number,
- *            resolution: number,
- *            extent: ol.Extent}}
- */
-ol.source.Raster.RenderedState;
-
-
-/**
  * @classdesc
  * Events emitted by {@link ol.source.Raster} instances are instances of this
  * type.

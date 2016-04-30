@@ -1,11 +1,9 @@
 goog.provide('ol.source.Tile');
 goog.provide('ol.source.TileEvent');
-goog.provide('ol.source.TileOptions');
 
 goog.require('goog.asserts');
 goog.require('ol.events.Event');
 goog.require('ol');
-goog.require('ol.Extent');
 goog.require('ol.TileCache');
 goog.require('ol.TileRange');
 goog.require('ol.TileState');
@@ -14,21 +12,6 @@ goog.require('ol.size');
 goog.require('ol.source.Source');
 goog.require('ol.tilecoord');
 goog.require('ol.tilegrid.TileGrid');
-
-
-/**
- * @typedef {{attributions: (ol.AttributionLike|undefined),
- *            cacheSize: (number|undefined),
- *            extent: (ol.Extent|undefined),
- *            logo: (string|olx.LogoOptions|undefined),
- *            opaque: (boolean|undefined),
- *            tilePixelRatio: (number|undefined),
- *            projection: ol.proj.ProjectionLike,
- *            state: (ol.source.State|undefined),
- *            tileGrid: (ol.tilegrid.TileGrid|undefined),
- *            wrapX: (boolean|undefined)}}
- */
-ol.source.TileOptions;
 
 
 /**

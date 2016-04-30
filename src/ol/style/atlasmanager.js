@@ -5,16 +5,6 @@ goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.dom');
 
-/**
- * Provides information for an image inside an atlas manager.
- * `offsetX` and `offsetY` is the position of the image inside
- * the atlas image `image` and the position of the hit-detection image
- * inside the hit-detection atlas image `hitImage`.
- * @typedef {{offsetX: number, offsetY: number, image: HTMLCanvasElement,
- *    hitImage: HTMLCanvasElement}}
- */
-ol.style.AtlasManagerInfo;
-
 
 /**
  * Manages the creation of image atlases.
@@ -240,15 +230,6 @@ ol.style.AtlasManager.prototype.add_ = function(isHitAtlas, id, width, height,
 
 
 /**
- * Provides information for an image inside an atlas.
- * `offsetX` and `offsetY` are the position of the image inside
- * the atlas image `image`.
- * @typedef {{offsetX: number, offsetY: number, image: HTMLCanvasElement}}
- */
-ol.style.AtlasInfo;
-
-
-/**
  * This class facilitates the creation of image atlases.
  *
  * Images added to an atlas will be rendered onto a single
@@ -423,9 +404,3 @@ ol.style.Atlas.prototype.updateBlocks_ = function(index, newBlock1, newBlock2) {
   }
   this.emptyBlocks_.splice.apply(this.emptyBlocks_, args);
 };
-
-
-/**
- * @typedef {{x: number, y: number, width: number, height: number}}
- */
-ol.style.Atlas.Block;

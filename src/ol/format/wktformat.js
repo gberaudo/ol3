@@ -367,12 +367,6 @@ ol.format.WKT.prototype.writeGeometryText = function(geometry, opt_options) {
 
 
 /**
- * @typedef {{type: number, value: (number|string|undefined), position: number}}
- */
-ol.format.WKT.Token;
-
-
-/**
  * @const
  * @enum {number}
  */

@@ -1,14 +1,12 @@
 goog.provide('ol.interaction.Draw');
 goog.provide('ol.interaction.DrawEvent');
 goog.provide('ol.interaction.DrawEventType');
-goog.provide('ol.interaction.DrawGeometryFunctionType');
 goog.provide('ol.interaction.DrawMode');
 
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.events.Event');
 goog.require('ol.Collection');
-goog.require('ol.Coordinate');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.MapBrowserEvent.EventType');
@@ -850,19 +848,6 @@ ol.interaction.Draw.getMode_ = function(type) {
   goog.asserts.assert(mode !== undefined, 'mode should be defined');
   return mode;
 };
-
-
-/**
- * Function that takes coordinates and an optional existing geometry as
- * arguments, and returns a geometry. The optional existing geometry is the
- * geometry that is returned when the function is called without a second
- * argument.
- * @typedef {function(!(ol.Coordinate|Array.<ol.Coordinate>|
- *     Array.<Array.<ol.Coordinate>>), ol.geom.SimpleGeometry=):
- *     ol.geom.SimpleGeometry}
- * @api
- */
-ol.interaction.DrawGeometryFunctionType;
 
 
 /**

@@ -1,23 +1,9 @@
 goog.provide('ol.VectorTile');
 
 goog.require('ol.Tile');
-goog.require('ol.TileCoord');
-goog.require('ol.TileLoadFunctionType');
 goog.require('ol.TileState');
 goog.require('ol.dom');
 goog.require('ol.proj.Projection');
-
-
-/**
- * @typedef {{
- *     dirty: boolean,
- *     renderedRenderOrder: (null|function(ol.Feature, ol.Feature):number),
- *     renderedTileRevision: number,
- *     renderedRevision: number,
- *     replayGroup: ol.render.IReplayGroup,
- *     skippedFeatures: Array.<string>}}
- */
-ol.TileReplayState;
 
 
 /**

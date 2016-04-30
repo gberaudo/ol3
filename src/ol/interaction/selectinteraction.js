@@ -1,7 +1,6 @@
 goog.provide('ol.interaction.Select');
 goog.provide('ol.interaction.SelectEvent');
 goog.provide('ol.interaction.SelectEventType');
-goog.provide('ol.interaction.SelectFilterFunction');
 
 goog.require('goog.asserts');
 goog.require('ol.functions');
@@ -29,17 +28,6 @@ ol.interaction.SelectEventType = {
    */
   SELECT: 'select'
 };
-
-
-/**
- * A function that takes an {@link ol.Feature} or {@link ol.render.Feature} and
- * an {@link ol.layer.Layer} and returns `true` if the feature may be selected
- * or `false` otherwise.
- * @typedef {function((ol.Feature|ol.render.Feature), ol.layer.Layer):
- *     boolean}
- * @api
- */
-ol.interaction.SelectFilterFunction;
 
 
 /**

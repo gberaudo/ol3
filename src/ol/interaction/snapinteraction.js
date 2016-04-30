@@ -6,7 +6,6 @@ goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.CollectionEvent');
 goog.require('ol.CollectionEventType');
-goog.require('ol.Extent');
 goog.require('ol.Feature');
 goog.require('ol.Object');
 goog.require('ol.Observable');
@@ -590,25 +589,6 @@ ol.interaction.Snap.prototype.writePolygonGeometry_ = function(feature, geometry
     }
   }
 };
-
-
-/**
- * @typedef {{
- *     snapped: {boolean},
- *     vertex: (ol.Coordinate|null),
- *     vertexPixel: (ol.Pixel|null)
- * }}
- */
-ol.interaction.Snap.ResultType;
-
-
-/**
- * @typedef {{
- *     feature: ol.Feature,
- *     segment: Array.<ol.Coordinate>
- * }}
- */
-ol.interaction.Snap.SegmentDataType;
 
 
 /**

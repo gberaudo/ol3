@@ -228,13 +228,6 @@ ol.style.Circle.prototype.unlistenImageChange = ol.nullFunction;
 
 
 /**
- * @typedef {{strokeStyle: (string|undefined), strokeWidth: number,
- *   size: number, lineDash: Array.<number>}}
- */
-ol.style.Circle.RenderOptions;
-
-
-/**
  * @private
  * @param {ol.style.AtlasManager|undefined} atlasManager An atlas manager.
  */

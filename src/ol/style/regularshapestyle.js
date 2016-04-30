@@ -290,20 +290,6 @@ ol.style.RegularShape.prototype.unlistenImageChange = ol.nullFunction;
 
 
 /**
- * @typedef {{
- *   strokeStyle: (string|undefined),
- *   strokeWidth: number,
- *   size: number,
- *   lineCap: string,
- *   lineDash: Array.<number>,
- *   lineJoin: string,
- *   miterLimit: number
- * }}
- */
-ol.style.RegularShape.RenderOptions;
-
-
-/**
  * @private
  * @param {ol.style.AtlasManager|undefined} atlasManager An atlas manager.
  */

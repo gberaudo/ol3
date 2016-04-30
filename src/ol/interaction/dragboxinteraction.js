@@ -4,7 +4,6 @@ goog.provide('ol.interaction.DragBox');
 
 goog.require('ol.events.Event');
 goog.require('ol');
-goog.require('ol.events.ConditionType');
 goog.require('ol.events.condition');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.render.Box');
@@ -78,16 +77,6 @@ ol.DragBoxEvent = function(type, coordinate, mapBrowserEvent) {
 
 };
 goog.inherits(ol.DragBoxEvent, ol.events.Event);
-
-
-/**
- * A function that takes a {@link ol.MapBrowserEvent} and two
- * {@link ol.Pixel}s and returns a `{boolean}`. If the condition is met,
- * true should be returned.
- * @typedef {function(ol.MapBrowserEvent, ol.Pixel, ol.Pixel):boolean}
- * @api
- */
-ol.interaction.DragBoxEndConditionType;
 
 
 /**

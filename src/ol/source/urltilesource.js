@@ -1,32 +1,10 @@
 goog.provide('ol.source.UrlTile');
 
 goog.require('ol.events');
-goog.require('ol.TileLoadFunctionType');
 goog.require('ol.TileState');
 goog.require('ol.TileUrlFunction');
-goog.require('ol.TileUrlFunctionType');
-goog.require('ol.proj');
 goog.require('ol.source.Tile');
 goog.require('ol.source.TileEvent');
-
-
-/**
- * @typedef {{attributions: (ol.AttributionLike|undefined),
- *            cacheSize: (number|undefined),
- *            extent: (ol.Extent|undefined),
- *            logo: (string|olx.LogoOptions|undefined),
- *            opaque: (boolean|undefined),
- *            projection: ol.proj.ProjectionLike,
- *            state: (ol.source.State|undefined),
- *            tileGrid: (ol.tilegrid.TileGrid|undefined),
- *            tileLoadFunction: ol.TileLoadFunctionType,
- *            tilePixelRatio: (number|undefined),
- *            tileUrlFunction: (ol.TileUrlFunctionType|undefined),
- *            url: (string|undefined),
- *            urls: (Array.<string>|undefined),
- *            wrapX: (boolean|undefined)}}
- */
-ol.source.UrlTileOptions;
 
 
 /**

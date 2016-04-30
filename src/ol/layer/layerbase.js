@@ -1,6 +1,5 @@
 goog.provide('ol.layer.Base');
 goog.provide('ol.layer.LayerProperty');
-goog.provide('ol.layer.LayerState');
 
 goog.require('ol');
 goog.require('ol.Object');
@@ -21,20 +20,6 @@ ol.layer.LayerProperty = {
   MIN_RESOLUTION: 'minResolution',
   SOURCE: 'source'
 };
-
-
-/**
- * @typedef {{layer: ol.layer.Layer,
- *            opacity: number,
- *            sourceState: ol.source.State,
- *            visible: boolean,
- *            managed: boolean,
- *            extent: (ol.Extent|undefined),
- *            zIndex: number,
- *            maxResolution: number,
- *            minResolution: number}}
- */
-ol.layer.LayerState;
 
 
 /**

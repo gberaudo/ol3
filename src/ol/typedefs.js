@@ -5,11 +5,6 @@
  * At present, they are all in the `ol` namespace, but this will be removed
  * when the main source is converted to modules and the `ol` namespace ceases
  * to exist.
- *
- * Sub-namespaces are added (`ol.ns = ol.ns || {}`) to prevent not found errors
- * when application code is compiled with the library and that code does not
- * use the namespace. These can be removed when the namespace structure
- * disappears.
  */
 
 
@@ -352,7 +347,6 @@ ol.format.KMLVec2_;
 ol.format.KMLGxTrackObject_;
 
 
-ol.format.WFS = ol.format.WFS || {};
 /**
  * Number of features; bounds/extent.
  * @typedef {{numberOfFeatures: number,
@@ -373,7 +367,6 @@ ol.format.WFS.FeatureCollectionMetadata;
 ol.format.WFS.TransactionResponse;
 
 
-ol.format.WKT = ol.format.WKT || {};
 /**
  * @typedef {{type: number, value: (number|string|undefined), position: number}}
  */
@@ -424,7 +417,6 @@ ol.interaction.SegmentDataType;
 ol.interaction.SelectFilterFunction;
 
 
-ol.interaction.Snap = ol.interaction.Snap || {};
 /**
  * @typedef {{
  *     snapped: {boolean},
@@ -467,7 +459,6 @@ ol.layer.LayerState;
 ol.proj.ProjectionLike;
 
 
-ol.raster = ol.raster || {};
 /**
  * A function that takes an array of input data, performs some operation, and
  * returns an array of ouput data.  For `'pixel'` type operations, functions
@@ -495,7 +486,6 @@ ol.raster.Operation;
 ol.raster.Pixel;
 
 
-ol.render.canvas = ol.render.canvas || {};
 /**
  * @typedef {{fillStyle: ol.ColorLike}}
  */
@@ -521,14 +511,12 @@ ol.render.canvas.StrokeState;
 ol.render.canvas.TextState;
 
 
-ol.renderer.webgl = ol.renderer.webgl || {};
 /**
  * @typedef {{magFilter: number, minFilter: number, texture: WebGLTexture}}
  */
 ol.renderer.webgl.TextureCacheEntry;
 
 
-ol.reproj = ol.reproj || {};
 /**
  * @typedef {function(ol.Extent, number, number) : ol.ImageBase}
  */
@@ -561,7 +549,6 @@ ol.reproj.Triangle;
 ol.source.ImageOptions;
 
 
-ol.source.Raster = ol.source.Raster || {};
 /**
  * @typedef {{revision: number,
  *            resolution: number,
@@ -623,7 +610,6 @@ ol.source.UrlTileOptions;
 ol.structs.LRUCacheEntry;
 
 
-ol.style.Atlas = ol.style.Atlas || {};
 /**
  * @typedef {{x: number, y: number, width: number, height: number}}
  */
@@ -650,7 +636,6 @@ ol.style.AtlasInfo;
 ol.style.AtlasManagerInfo;
 
 
-ol.style.Circle = ol.style.Circle || {};
 /**
  * @typedef {{strokeStyle: (string|undefined), strokeWidth: number,
  *   size: number, lineDash: Array.<number>}}
@@ -679,7 +664,6 @@ ol.style.GeometryFunction;
 ol.style.ImageOptions;
 
 
-ol.style.RegularShape = ol.style.RegularShape || {};
 /**
  * @typedef {{
  *   strokeStyle: (string|undefined),
@@ -706,7 +690,6 @@ ol.style.RegularShape.RenderOptions;
 ol.style.StyleFunction;
 
 
-ol.webgl = ol.webgl || {};
 /**
  * @typedef {{buf: ol.webgl.Buffer,
  *            buffer: WebGLBuffer}}
@@ -714,7 +697,6 @@ ol.webgl = ol.webgl || {};
 ol.webgl.BufferCacheEntry;
 
 
-ol.xml = ol.xml || {};
 /**
  * When using {@link ol.xml.makeChildAppender} or
  * {@link ol.xml.makeSimpleNodeFactory}, the top `objectStack` item needs to

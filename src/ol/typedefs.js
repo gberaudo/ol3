@@ -602,15 +602,6 @@ ol.source.UrlTileOptions;
 
 
 /**
- * @typedef {{key_: string,
- *            newer: ol.structs.LRUCacheEntry,
- *            older: ol.structs.LRUCacheEntry,
- *            value_: *}}
- */
-ol.structs.LRUCacheEntry;
-
-
-/**
  * @typedef {{x: number, y: number, width: number, height: number}}
  */
 ol.style.Atlas.Block;

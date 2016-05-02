@@ -62,15 +62,6 @@ ol.events.LISTENER_MAP_PROP_ = 'olm_' + ((Math.random() * 1e4) | 0);
 
 
 /**
- * @typedef {EventTarget|ol.events.EventTarget|
- *     {addEventListener: function(string, Function, boolean=),
- *     removeEventListener: function(string, Function, boolean=),
- *     dispatchEvent: function(string)}}
- */
-ol.events.EventTargetLike;
-
-
-/**
  * @param {ol.events.Key} listenerObj Listener object.
  * @return {ol.events.ListenerFunctionType} Bound listener.
  */

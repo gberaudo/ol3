@@ -15,7 +15,7 @@ goog.require('ol.extent');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.object');
-goog.require('ol.raster.OperationType');
+goog.require('ol.raster');
 goog.require('ol.renderer.canvas.ImageLayer');
 goog.require('ol.renderer.canvas.TileLayer');
 goog.require('ol.source.Image');

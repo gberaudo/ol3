@@ -1,4 +1,3 @@
-// NOCOMPILE
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
@@ -107,7 +106,7 @@ var raster = new ol.source.Raster({
   operation: function(pixels, data) {
     var hcl = rgb2hcl(pixels[0]);
 
-    var h = hcl[0] + Math.PI * data.hue / 180;
+    var h = hcl[0] + Math.PI * data['hue'] / 180;
     if (h < 0) {
       h += twoPi;
     } else if (h > twoPi) {
@@ -115,8 +114,8 @@ var raster = new ol.source.Raster({
     }
     hcl[0] = h;
 
-    hcl[1] *= (data.chroma / 100);
-    hcl[2] *= (data.lightness / 100);
+    hcl[1] *= (data['chroma'] / 100);
+    hcl[2] *= (data['lightness'] / 100);
 
     return hcl2rgb(hcl);
   },

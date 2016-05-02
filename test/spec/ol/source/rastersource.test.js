@@ -298,7 +298,7 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
 goog.require('ol.proj.Projection');
-goog.require('ol.raster.OperationType');
+goog.require('ol.raster');
 goog.require('ol.source.Image');
 goog.require('ol.source.ImageStatic');
 goog.require('ol.source.Raster');

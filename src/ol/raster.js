@@ -1,3 +1,4 @@
+goog.provide('ol.raster');
 goog.provide('ol.raster.OperationType');
 
 

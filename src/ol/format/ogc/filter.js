@@ -350,7 +350,7 @@ goog.inherits(ol.format.ogc.filter.Not, ol.format.ogc.filter.Logical);
  *
  * @constructor
  * @param {!string} geometryName Geometry name to use.
- * @param {ol.Extent} extent Extent.
+ * @param {!ol.Extent} extent Extent.
  * @param {string=} opt_srsName SRS name. No srsName attribute will be
  *    set on geometries when this is not provided.
  * @extends {ol.format.ogc.filter.Filter}
@@ -366,9 +366,12 @@ ol.format.ogc.filter.Bbox = function(geometryName, extent, opt_srsName) {
    */
   this.geometryName = geometryName;
 
+  // for an unknown reason, closure thinks extent may be null
+  goog.asserts.assert(extent);
+
   /**
    * @public
-   * @type {ol.Extent}
+   * @type {!ol.Extent}
    */
   this.extent = extent;
 

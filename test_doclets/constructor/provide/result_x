@@ -1,0 +1,66 @@
+[
+    {
+        "comment": "/**\n * @constructor\n * @api\n */",
+        "meta": {
+            "range": [
+                56,
+                151
+            ],
+            "filename": "a.js",
+            "lineno": 8,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/constructor/provide",
+            "code": {
+                "id": "astnode100000008",
+                "name": "ol.A",
+                "type": "FunctionExpression",
+                "paramnames": []
+            },
+            "vars": {
+                "this.element": "ol.A#element"
+            }
+        },
+        "kind": "class",
+        "api": "experimental",
+        "name": "A",
+        "longname": "ol.A",
+        "memberof": "ol",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
+        "meta": {
+            "range": [
+                128,
+                147
+            ],
+            "filename": "a.js",
+            "lineno": 14,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/constructor/provide",
+            "code": {
+                "id": "astnode100000015",
+                "name": "this.element",
+                "type": "Literal",
+                "value": null,
+                "paramnames": []
+            }
+        },
+        "type": {
+            "names": [
+                "Object"
+            ]
+        },
+        "api": "stable",
+        "name": "element",
+        "longname": "ol.A#element",
+        "kind": "member",
+        "memberof": "ol.A",
+        "scope": "instance"
+    },
+    {
+        "kind": "package",
+        "longname": "package:undefined",
+        "files": [
+            "/home/gberaudo/dev/ol3/test_doclets/constructor/provide/a.js"
+        ]
+    }
+]

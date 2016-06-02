@@ -1,0 +1,28 @@
+{
+  "symbols": [
+    {
+      "name": "ol.A.ADD",
+      "kind": "member",
+      "description": "Triggered when an item is added to the collection.",
+      "stability": "stable",
+
+      "types": [
+        "string"
+      ]
+    },
+    {
+      "name": "ol.A.REMOVE",
+      "kind": "member",
+      "description": "Triggered when an item is removed from the collection.",
+      "stability": "stable",
+
+      "types": [
+        "string"
+      ]
+    }
+  ],
+  "defines": [],
+  "typedefs": [],
+  "externs": [],
+  "base": []
+}

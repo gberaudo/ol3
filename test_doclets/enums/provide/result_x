@@ -1,0 +1,165 @@
+[
+    {
+        "comment": "/**\n * @enum {string}\n */",
+        "meta": {
+            "range": [
+                50,
+                267
+            ],
+            "filename": "a.js",
+            "lineno": 7,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/enums/provide",
+            "code": {
+                "id": "astnode100000008",
+                "name": "ol.A",
+                "type": "ObjectExpression",
+                "value": "{\"ADD\":\"add\",\"REMOVE\":\"remove\"}",
+                "paramnames": []
+            }
+        },
+        "kind": "member",
+        "isEnum": true,
+        "type": {
+            "names": [
+                "string"
+            ]
+        },
+        "name": "A",
+        "longname": "ol.A",
+        "memberof": "ol",
+        "scope": "static",
+        "properties": [
+            {
+                "comment": "/**\n   * Triggered when an item is added to the collection.\n   * @api stable\n   */",
+                "meta": {
+                    "range": [
+                        146,
+                        156
+                    ],
+                    "filename": "a.js",
+                    "lineno": 12,
+                    "path": "/home/gberaudo/dev/ol3/test_doclets/enums/provide",
+                    "code": {
+                        "id": "astnode100000013",
+                        "name": "ADD",
+                        "type": "Literal",
+                        "value": "add"
+                    }
+                },
+                "description": "Triggered when an item is added to the collection.",
+                "api": "stable",
+                "name": "ADD",
+                "longname": "ol.A.ADD",
+                "kind": "member",
+                "memberof": "ol.A",
+                "scope": "static",
+                "type": {
+                    "names": [
+                        "string"
+                    ]
+                },
+                "defaultvalue": "add"
+            },
+            {
+                "comment": "/**\n   * Triggered when an item is removed from the collection.\n   * @api stable\n   */",
+                "meta": {
+                    "range": [
+                        249,
+                        265
+                    ],
+                    "filename": "a.js",
+                    "lineno": 17,
+                    "path": "/home/gberaudo/dev/ol3/test_doclets/enums/provide",
+                    "code": {
+                        "id": "astnode100000015",
+                        "name": "REMOVE",
+                        "type": "Literal",
+                        "value": "remove"
+                    }
+                },
+                "description": "Triggered when an item is removed from the collection.",
+                "api": "stable",
+                "name": "REMOVE",
+                "longname": "ol.A.REMOVE",
+                "kind": "member",
+                "memberof": "ol.A",
+                "scope": "static",
+                "type": {
+                    "names": [
+                        "string"
+                    ]
+                },
+                "defaultvalue": "remove"
+            }
+        ]
+    },
+    {
+        "comment": "/**\n   * Triggered when an item is added to the collection.\n   * @api stable\n   */",
+        "meta": {
+            "range": [
+                146,
+                156
+            ],
+            "filename": "a.js",
+            "lineno": 12,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/enums/provide",
+            "code": {
+                "id": "astnode100000013",
+                "name": "ADD",
+                "type": "Literal",
+                "value": "add"
+            }
+        },
+        "description": "Triggered when an item is added to the collection.",
+        "api": "stable",
+        "name": "ADD",
+        "longname": "ol.A.ADD",
+        "kind": "member",
+        "memberof": "ol.A",
+        "scope": "static",
+        "type": {
+            "names": [
+                "string"
+            ]
+        },
+        "defaultvalue": "add"
+    },
+    {
+        "comment": "/**\n   * Triggered when an item is removed from the collection.\n   * @api stable\n   */",
+        "meta": {
+            "range": [
+                249,
+                265
+            ],
+            "filename": "a.js",
+            "lineno": 17,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/enums/provide",
+            "code": {
+                "id": "astnode100000015",
+                "name": "REMOVE",
+                "type": "Literal",
+                "value": "remove"
+            }
+        },
+        "description": "Triggered when an item is removed from the collection.",
+        "api": "stable",
+        "name": "REMOVE",
+        "longname": "ol.A.REMOVE",
+        "kind": "member",
+        "memberof": "ol.A",
+        "scope": "static",
+        "type": {
+            "names": [
+                "string"
+            ]
+        },
+        "defaultvalue": "remove"
+    },
+    {
+        "kind": "package",
+        "longname": "package:undefined",
+        "files": [
+            "/home/gberaudo/dev/ol3/test_doclets/enums/provide/a.js"
+        ]
+    }
+]

@@ -39,7 +39,7 @@ describe('ol.renderer.canvas.VectorTileLayer', function() {
         this.setProjection(ol.proj.get('EPSG:4326'));
         tileCallback(this);
       };
-      ol.inherits(TileClass, ol.VectorTile);
+      goog.inherits(TileClass, ol.VectorTile);
       var source = new ol.source.VectorTile({
         format: new ol.format.MVT(),
         tileClass: TileClass,
@@ -103,7 +103,7 @@ describe('ol.renderer.canvas.VectorTileLayer', function() {
       this.setProjection(ol.proj.get('EPSG:3857'));
       this.replayState_.replayGroup = replayGroup;
     };
-    ol.inherits(TileClass, ol.VectorTile);
+    goog.inherits(TileClass, ol.VectorTile);
 
     beforeEach(function() {
       replayGroup = {};

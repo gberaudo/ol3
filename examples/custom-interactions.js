@@ -60,7 +60,7 @@ app.Drag = function() {
   this.previousCursor_ = undefined;
 
 };
-ol.inherits(app.Drag, ol.interaction.Pointer);
+goog.inherits(app.Drag, ol.interaction.Pointer);
 
 
 /**

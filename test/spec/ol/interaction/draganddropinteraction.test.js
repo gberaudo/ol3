@@ -72,7 +72,7 @@ describe('ol.interaction.DragAndDrop', function() {
           this.dispatchEvent('load');
         };
       };
-      ol.inherits(FileReader, ol.events.EventTarget);
+      goog.inherits(FileReader, ol.events.EventTarget);
     });
 
     afterEach(function() {

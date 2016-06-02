@@ -49,7 +49,7 @@ app.RotateNorthControl = function(opt_options) {
   });
 
 };
-ol.inherits(app.RotateNorthControl, ol.control.Control);
+goog.inherits(app.RotateNorthControl, ol.control.Control);
 
 
 //

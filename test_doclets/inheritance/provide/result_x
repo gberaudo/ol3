@@ -1,0 +1,252 @@
+[
+    {
+        "comment": "/**\n * @constructor\n * @api\n */",
+        "meta": {
+            "range": [
+                59,
+                157
+            ],
+            "filename": "base.js",
+            "lineno": 8,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000008",
+                "name": "ol.Base",
+                "type": "FunctionExpression",
+                "paramnames": []
+            },
+            "vars": {
+                "this.element": "ol.Base#element"
+            }
+        },
+        "kind": "class",
+        "api": "experimental",
+        "name": "Base",
+        "longname": "ol.Base",
+        "memberof": "ol",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
+        "meta": {
+            "range": [
+                134,
+                153
+            ],
+            "filename": "base.js",
+            "lineno": 14,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000015",
+                "name": "this.element",
+                "type": "Literal",
+                "value": null,
+                "paramnames": []
+            }
+        },
+        "type": {
+            "names": [
+                "Object"
+            ]
+        },
+        "api": "stable",
+        "name": "element",
+        "longname": "ol.Base#element",
+        "kind": "member",
+        "memberof": "ol.Base",
+        "scope": "instance"
+    },
+    {
+        "comment": "/**\n * @api\n */",
+        "meta": {
+            "range": [
+                176,
+                222
+            ],
+            "filename": "base.js",
+            "lineno": 21,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000021",
+                "name": "ol.Base.prototype.toOverride",
+                "type": "FunctionExpression",
+                "paramnames": []
+            }
+        },
+        "api": "experimental",
+        "name": "toOverride",
+        "longname": "ol.Base#toOverride",
+        "kind": "function",
+        "memberof": "ol.Base",
+        "scope": "instance"
+    },
+    {
+        "comment": "/**\n * @api\n */",
+        "meta": {
+            "range": [
+                240,
+                284
+            ],
+            "filename": "base.js",
+            "lineno": 27,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000032",
+                "name": "ol.Base.prototype.onlyBase",
+                "type": "FunctionExpression",
+                "paramnames": []
+            }
+        },
+        "api": "experimental",
+        "name": "onlyBase",
+        "longname": "ol.Base#onlyBase",
+        "kind": "function",
+        "memberof": "ol.Base",
+        "scope": "instance"
+    },
+    {
+        "comment": "/**\n * @extends {ol.Base}\n * @constructor\n * @api\n */",
+        "meta": {
+            "range": [
+                128,
+                249
+            ],
+            "filename": "child.js",
+            "lineno": 12,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000062",
+                "name": "ol.Child",
+                "type": "FunctionExpression",
+                "paramnames": []
+            },
+            "vars": {
+                "this.element": "ol.Child#element"
+            }
+        },
+        "augments": [
+            "ol.Base"
+        ],
+        "kind": "class",
+        "api": "experimental",
+        "name": "Child",
+        "longname": "ol.Child",
+        "memberof": "ol",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
+        "meta": {
+            "range": [
+                227,
+                246
+            ],
+            "filename": "child.js",
+            "lineno": 20,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000077",
+                "name": "this.element",
+                "type": "Literal",
+                "value": null,
+                "paramnames": []
+            }
+        },
+        "type": {
+            "names": [
+                "Object"
+            ]
+        },
+        "api": "stable",
+        "name": "element",
+        "longname": "ol.Child#element",
+        "kind": "member",
+        "memberof": "ol.Child",
+        "scope": "instance",
+        "overrides": "ol.Base#element"
+    },
+    {
+        "comment": "/**\n * @inheritDoc\n */",
+        "meta": {
+            "range": [
+                310,
+                346
+            ],
+            "filename": "child.js",
+            "lineno": 30,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000094",
+                "name": "ol.Child.toOverride",
+                "type": "FunctionExpression",
+                "paramnames": []
+            }
+        },
+        "inheritdoc": "",
+        "name": "toOverride",
+        "longname": "ol.Child.toOverride",
+        "kind": "function",
+        "memberof": "ol.Child",
+        "scope": "static"
+    },
+    {
+        "kind": "package",
+        "longname": "package:undefined",
+        "files": [
+            "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide/base.js",
+            "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide/child.js"
+        ]
+    },
+    {
+        "comment": "/**\n * @api\n */",
+        "meta": {
+            "range": [
+                176,
+                222
+            ],
+            "filename": "base.js",
+            "lineno": 21,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000021",
+                "name": "ol.Base.prototype.toOverride",
+                "type": "FunctionExpression",
+                "paramnames": []
+            }
+        },
+        "api": "experimental",
+        "name": "toOverride",
+        "longname": "ol.Child#toOverride",
+        "kind": "function",
+        "memberof": "ol.Child",
+        "scope": "instance",
+        "inherits": "ol.Base#toOverride",
+        "inherited": true
+    },
+    {
+        "comment": "/**\n * @api\n */",
+        "meta": {
+            "range": [
+                240,
+                284
+            ],
+            "filename": "base.js",
+            "lineno": 27,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/provide",
+            "code": {
+                "id": "astnode100000032",
+                "name": "ol.Base.prototype.onlyBase",
+                "type": "FunctionExpression",
+                "paramnames": []
+            }
+        },
+        "api": "experimental",
+        "name": "onlyBase",
+        "longname": "ol.Child#onlyBase",
+        "kind": "function",
+        "memberof": "ol.Child",
+        "scope": "instance",
+        "inherits": "ol.Base#onlyBase",
+        "inherited": true
+    }
+]

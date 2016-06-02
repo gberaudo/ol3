@@ -1,0 +1,23 @@
+{
+  "symbols": [
+    {
+      "name": "ol.A",
+      "kind": "class",
+      "stability": "experimental",
+
+    },
+    {
+      "name": "ol.A#element",
+      "kind": "member",
+      "stability": "stable",
+
+      "types": [
+        "Object"
+      ]
+    }
+  ],
+  "defines": [],
+  "typedefs": [],
+  "externs": [],
+  "base": []
+}

@@ -1,0 +1,65 @@
+{
+  "symbols": [
+    {
+      "name": "ol.Base",
+      "kind": "class",
+      "stability": "experimental",
+
+    },
+    {
+      "name": "ol.Base#element",
+      "kind": "member",
+      "stability": "stable",
+
+      "types": [
+        "Object"
+      ]
+    },
+    {
+      "name": "ol.Base#toOverride",
+      "kind": "function",
+      "stability": "experimental",
+
+    },
+    {
+      "name": "ol.Base#onlyBase",
+      "kind": "function",
+      "stability": "experimental",
+
+    },
+    {
+      "name": "ol.Child",
+      "kind": "class",
+      "stability": "experimental",
+
+      "extends": "ol.Base"
+    },
+    {
+      "name": "ol.Child#element",
+      "kind": "member",
+      "stability": "stable",
+
+      "types": [
+        "Object"
+      ]
+    },
+    {
+      "name": "ol.Child#toOverride",
+      "kind": "function",
+      "stability": "experimental",
+      "inherited": true,
+
+    },
+    {
+      "name": "ol.Child#onlyBase",
+      "kind": "function",
+      "stability": "experimental",
+      "inherited": true,
+
+    }
+  ],
+  "defines": [],
+  "typedefs": [],
+  "externs": [],
+  "base": []
+}

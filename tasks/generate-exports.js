@@ -160,6 +160,10 @@ function generateExports(symbols, namespace) {
       requires[provide] = true;
     });
     var name = symbol.name;
+    if (name.indexOf('.') === -1) {
+      console.warn('Skipping symbol', symbol.name, symbol.provides);
+      return;
+    }
     if (name.indexOf('#') > 0) {
       blocks.push(formatPropertyExport(name));
     } else {

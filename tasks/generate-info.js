@@ -17,6 +17,7 @@ var infoPath = path.join(__dirname, '..', 'build', 'info.json');
 var jsdocResolved = require.resolve('jsdoc/jsdoc.js');
 var jsdoc = path.resolve(path.dirname(jsdocResolved), '../.bin/jsdoc');
 
+
 // on Windows, use jsdoc.cmd
 if (isWindows) {
   jsdoc += '.cmd';
@@ -189,7 +190,8 @@ function spawnJSDoc(paths, callback) {
 
 
 /**
- * Given the path to a source file, get the list of provides.
+ * Given the path to a source file, get the list of provides and if
+ * the symbol is in a module.
  * @param {string} srcPath Path to source file.
  * @param {function(Error, Array.<string>)} callback Called with a list of
  *     provides or any error.
@@ -200,15 +202,18 @@ var getProvides = async.memoize(function(srcPath, callback) {
       callback(err);
       return;
     }
+    var module = false;
     var provides = [];
     var matcher = /goog\.(provide|module)\('(.*)'\)/;
+    var moduleMatcher = /goog\.(module)\('(.*)'\)/;
     String(data).split('\n').forEach(function(line) {
       var match = line.match(matcher);
       if (match) {
         provides.push(match[2]);
       }
+      module = module || !!line.match(moduleMatcher);
     });
-    callback(null, provides);
+    callback(null, provides, module);
   });
 });
 
@@ -227,7 +232,7 @@ function addSymbolProvides(info, callback) {
   }
 
   function addProvides(symbol, callback) {
-    getProvides(symbol.path, function(err, provides) {
+    getProvides(symbol.path, function(err, provides, module) {
       if (err) {
         callback(err);
         return;
@@ -238,7 +243,11 @@ function addSymbolProvides(info, callback) {
   }
 
   async.map(info.symbols, addProvides, function(err, newSymbols) {
-    info.symbols = newSymbols;
+    info.symbols = newSymbols.filter(function(symbol) {
+      // in case of inherited symbol, doclets are generate by jsdoc; however
+      // they do not contain information about the superclass file / type.
+      return !symbol.inherited;
+    });
     callback(err, info);
   });
 }

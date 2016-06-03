@@ -7,7 +7,6 @@ var async = require('async');
 var closure = require('closure-util');
 var fs = require('fs-extra');
 var nomnom = require('nomnom');
-var temp = require('temp').track();
 var exec = require('child_process').exec;
 
 var generateExports = require('./generate-exports');
@@ -103,31 +102,19 @@ function readConfig(configPath, callback) {
 
 
 /**
- * Write the exports code to a temporary file.
+ * Write the exports code to build/exports.js.
  * @param {string} exports Exports code.
- * @param {function(Error, string)} callback Called with the path to the temp
- *     file (or any error).
+ * @param {function(Error, string)} callback Called with null or any error.
  */
 function writeExports(exports, callback) {
-  temp.open({prefix: 'exports', suffix: '.js'}, function(err, info) {
+  path = 'build/exports.js'
+  log.verbose('build', 'Writing exports: ' + path);
+  fs.writeFile(path, exports, function(err) {
     if (err) {
       callback(err);
       return;
     }
-    log.verbose('build', 'Writing exports: ' + info.path);
-    fs.writeFile(info.path, exports, function(err) {
-      if (err) {
-        callback(err);
-        return;
-      }
-      fs.close(info.fd, function(err) {
-        if (err) {
-          callback(err);
-          return;
-        }
-        callback(null, info.path);
-      });
-    });
+    callback(null, path);
   });
 }
 

@@ -1,19 +1,26 @@
-var moduleMatcher = /goog\.(module)\('(.*)'\)/;
+var moduleMatcher = /goog\.module\('(.*)'\)/;
+var requireMatcher = /(const|let|var) (.*) = goog\.require\('(.*)'\)/;
 
 var currentModule;
+var currentRequires;
+var MAX_LINES_TO_SEARCH = 100; // empirical limit
 
 exports.handlers = {
   beforeParse: function(e) {
+    currentRequires = {};
+    currentModule = null;
     var lines = String(e.source).split('\n');
-    for (var i = 0, ii = lines.length; i < ii; i++) {
+    for (var i = 0, ii = Math.min(lines.length, MAX_LINES_TO_SEARCH); i < ii; i++) {
       var line = lines[i];
-      var match = line.match(moduleMatcher);
-      if (match) {
-        currentModule = match[2];
-        return;
+      var matchModule = line.match(moduleMatcher);
+      if (matchModule) {
+        currentModule = matchModule[1];
+      }
+      var matchRequire = line.match(requireMatcher);
+      if (matchRequire) {
+        currentRequires[matchRequire[2]] = matchRequire[3];
       }
     }
-    currentModule = null;
   },
   newDoclet: function(e) {
     var doclet = e.doclet;
@@ -21,6 +28,13 @@ exports.handlers = {
       // Doclets in modules are messed up due to jsdoc trying to handle
       // assignments to 'exports' or properties from 'exports'.
       doclet.module = currentModule;
+
+      // replace extends local name by the required name
+      if (doclet.augments) {
+        doclet.augments = doclet.augments.map(function(augment) {
+          return currentRequires[augment] ? currentRequires[augment] : augment;
+        });
+      }
       if (!doclet.longname) {
         // module constructor
         doclet.longname = currentModule;

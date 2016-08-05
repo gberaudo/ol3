@@ -32,7 +32,7 @@
       "kind": "class",
       "stability": "experimental",
 
-      "extends": "Base"
+      "extends": "ol.Base"
     },
     {
       "name": "ol.Child#element",

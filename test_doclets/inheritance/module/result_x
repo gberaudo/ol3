@@ -157,7 +157,7 @@
             }
         },
         "augments": [
-            "Base"
+            "ol.Base"
         ],
         "kind": "class",
         "api": "experimental",
@@ -192,7 +192,8 @@
         "kind": "member",
         "memberof": "ol.Child",
         "scope": "instance",
-        "module": "ol.Child"
+        "module": "ol.Child",
+        "overrides": "ol.Base#element"
     },
     {
         "comment": "/**\n * @inheritDoc\n */",

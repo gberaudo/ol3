@@ -2,12 +2,9 @@
     {
         "comment": "/**\n * @constructor\n * @api\n */",
         "meta": {
-            "range": [
-                93,
-                191
-            ],
+            "range": [],
             "filename": "a.js",
-            "lineno": 9,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/constructor/module",
             "code": {
                 "id": "astnode100000015",
@@ -29,12 +26,9 @@
     {
         "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
         "meta": {
-            "range": [
-                168,
-                187
-            ],
+            "range": [],
             "filename": "a.js",
-            "lineno": 15,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/constructor/module",
             "code": {
                 "id": "astnode100000020",

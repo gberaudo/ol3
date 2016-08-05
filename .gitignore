@@ -2,3 +2,4 @@
 /node_modules/
 /dist/
 /coverage/
+/test_doclets/**/result_x.with_lines

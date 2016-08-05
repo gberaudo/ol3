@@ -2,12 +2,9 @@
     {
         "comment": "/**\n * @constructor\n * @api\n */",
         "meta": {
-            "range": [
-                96,
-                194
-            ],
+            "range": [],
             "filename": "base.js",
-            "lineno": 9,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000015",
@@ -29,12 +26,9 @@
     {
         "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
         "meta": {
-            "range": [
-                171,
-                190
-            ],
+            "range": [],
             "filename": "base.js",
-            "lineno": 15,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000020",
@@ -60,12 +54,9 @@
     {
         "comment": "/**\n * @api\n */",
         "meta": {
-            "range": [
-                213,
-                259
-            ],
+            "range": [],
             "filename": "base.js",
-            "lineno": 22,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000026",
@@ -85,12 +76,9 @@
     {
         "comment": "/**\n * @api\n */",
         "meta": {
-            "range": [
-                277,
-                321
-            ],
+            "range": [],
             "filename": "base.js",
-            "lineno": 28,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000035",
@@ -110,12 +98,9 @@
     {
         "comment": "",
         "meta": {
-            "range": [
-                68,
-                98
-            ],
+            "range": [],
             "filename": "child.js",
-            "lineno": 4,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000058",
@@ -135,12 +120,9 @@
     {
         "comment": "",
         "meta": {
-            "range": [
-                104,
-                127
-            ],
+            "range": [],
             "filename": "child.js",
-            "lineno": 5,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000066",
@@ -160,12 +142,9 @@
     {
         "comment": "/**\n * @extends {Base}\n * @constructor\n * @api\n */",
         "meta": {
-            "range": [
-                182,
-                299
-            ],
+            "range": [],
             "filename": "child.js",
-            "lineno": 13,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000074",
@@ -190,12 +169,9 @@
     {
         "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
         "meta": {
-            "range": [
-                277,
-                296
-            ],
+            "range": [],
             "filename": "child.js",
-            "lineno": 21,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000085",
@@ -221,12 +197,9 @@
     {
         "comment": "/**\n * @inheritDoc\n */",
         "meta": {
-            "range": [
-                356,
-                391
-            ],
+            "range": [],
             "filename": "child.js",
-            "lineno": 31,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000098",

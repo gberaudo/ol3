@@ -2,12 +2,9 @@
     {
         "comment": "/**\n * @enum {string}\n */",
         "meta": {
-            "range": [
-                87,
-                307
-            ],
+            "range": [],
             "filename": "a.js",
-            "lineno": 8,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/enums/module",
             "code": {
                 "id": "astnode100000015",
@@ -32,12 +29,9 @@
             {
                 "comment": "/**\n   * Triggered when an item is added to the collection.\n   * @api stable\n   */",
                 "meta": {
-                    "range": [
-                        186,
-                        196
-                    ],
+                    "range": [],
                     "filename": "a.js",
-                    "lineno": 13,
+                    "lineno": 0,
                     "path": "/home/gberaudo/dev/ol3/test_doclets/enums/module",
                     "code": {
                         "id": "astnode100000018",
@@ -64,12 +58,9 @@
             {
                 "comment": "/**\n   * Triggered when an item is removed from the collection.\n   * @api stable\n   */",
                 "meta": {
-                    "range": [
-                        289,
-                        305
-                    ],
+                    "range": [],
                     "filename": "a.js",
-                    "lineno": 18,
+                    "lineno": 0,
                     "path": "/home/gberaudo/dev/ol3/test_doclets/enums/module",
                     "code": {
                         "id": "astnode100000020",
@@ -98,12 +89,9 @@
     {
         "comment": "/**\n   * Triggered when an item is added to the collection.\n   * @api stable\n   */",
         "meta": {
-            "range": [
-                186,
-                196
-            ],
+            "range": [],
             "filename": "a.js",
-            "lineno": 13,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/enums/module",
             "code": {
                 "id": "astnode100000018",
@@ -130,12 +118,9 @@
     {
         "comment": "/**\n   * Triggered when an item is removed from the collection.\n   * @api stable\n   */",
         "meta": {
-            "range": [
-                289,
-                305
-            ],
+            "range": [],
             "filename": "a.js",
-            "lineno": 18,
+            "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/enums/module",
             "code": {
                 "id": "astnode100000020",

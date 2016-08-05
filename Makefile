@@ -86,7 +86,7 @@ check-deps:
 	done ;\
 
 .PHONY: ci
-ci: lint build test test-rendering compile-examples check-examples apidoc
+ci: lint build test test-doclets test-rendering compile-examples check-examples apidoc
 
 .PHONY: compile-examples
 compile-examples: build/compiled-examples/all.combined.js
@@ -134,6 +134,11 @@ serve: build/test_requires.js build/test_rendering_requires.js
 .PHONY: test
 test: build/timestamps/node-modules-timestamp build/test_requires.js
 	node tasks/test.js
+
+.PHONY: test-doclets
+test-doclets: build/timestamps/node-modules-timestamp
+	test_doclets/run.sh
+	test_doclets/compare.sh
 
 .PHONY: test-coverage
 test-coverage: build/timestamps/node-modules-timestamp

@@ -40,6 +40,7 @@ exports.handlers = {
         doclet.longname = currentModule;
         doclet.name = currentModule;
       } else if (doclet.name === doclet.longname) {
+        doclet.scope = 'instance';
         // module constructor method
         if(doclet.name[0] !== '#') {
           if (doclet.kind === 'function') {
@@ -51,6 +52,8 @@ exports.handlers = {
             doclet.longname = doclet.module + '#' + doclet.name;
           }
         } else {
+          // inherited or overriden method from base class
+          // case ol.Base#toOverride, ol.Base#onlyBase
           doclet.name = doclet.name.substr(1);
           doclet.longname = doclet.module + '#' + doclet.name;
         }

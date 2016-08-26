@@ -42,6 +42,20 @@
       "types": [
         "Object"
       ]
+    },
+    {
+      "name": "ol.Child#toOverride",
+      "kind": "function",
+      "stability": "experimental",
+      "inherited": true,
+
+    },
+    {
+      "name": "ol.Child#onlyBase",
+      "kind": "function",
+      "stability": "experimental",
+      "inherited": true,
+
     }
   ],
   "defines": [],

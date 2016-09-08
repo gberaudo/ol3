@@ -10,7 +10,7 @@ var ol = goog.require('ol');
  * @constructor
  * @api
  */
-exports = function() {
+var someLocalName = function() {
 
   Base.call(this);
 
@@ -22,11 +22,13 @@ exports = function() {
 };
 
 
-ol.inherits(exports, Base);
+ol.inherits(someLocalName, Base);
 
 
 /**
  * @inheritDoc
  */
-exports.toOverride = function() {
+someLocalName.toOverride = function() {
 };
+
+exports = someLocalName;

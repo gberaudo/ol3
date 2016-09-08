@@ -8,20 +8,20 @@
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000015",
-                "name": "exports",
-                "type": "FunctionExpression",
-                "paramnames": []
+                "name": "localName",
+                "type": "FunctionExpression"
             },
             "vars": {
-                "this.element": "ol.Base#element"
+                "this.element": "ol.Base#localName#element"
             }
         },
         "kind": "class",
         "api": "experimental",
-        "name": "ol.Base",
-        "longname": "ol.Base",
-        "scope": "global",
-        "module": "ol.Base"
+        "name": "localName",
+        "longname": "ol.Base#localName",
+        "scope": "instance",
+        "module": "ol.Base",
+        "memberof": "ol.Base"
     },
     {
         "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
@@ -45,9 +45,9 @@
         },
         "api": "stable",
         "name": "element",
-        "longname": "ol.Base#element",
+        "longname": "ol.Base#localName#element",
         "kind": "member",
-        "memberof": "ol.Base",
+        "memberof": "ol.Base#localName",
         "scope": "instance",
         "module": "ol.Base"
     },
@@ -60,18 +60,18 @@
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000026",
-                "name": "exports.prototype.toOverride",
+                "name": "localName.prototype.toOverride",
                 "type": "FunctionExpression",
                 "paramnames": []
             }
         },
         "api": "experimental",
         "name": "toOverride",
-        "longname": "ol.Base#toOverride",
+        "longname": "ol.Base#localName#toOverride",
         "kind": "function",
+        "memberof": "ol.Base#localName",
         "scope": "instance",
-        "module": "ol.Base",
-        "memberof": "ol.Base"
+        "module": "ol.Base"
     },
     {
         "comment": "/**\n * @api\n */",
@@ -82,18 +82,40 @@
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
                 "id": "astnode100000035",
-                "name": "exports.prototype.onlyBase",
+                "name": "localName.prototype.onlyBase",
                 "type": "FunctionExpression",
                 "paramnames": []
             }
         },
         "api": "experimental",
         "name": "onlyBase",
-        "longname": "ol.Base#onlyBase",
+        "longname": "ol.Base#localName#onlyBase",
         "kind": "function",
+        "memberof": "ol.Base#localName",
         "scope": "instance",
-        "module": "ol.Base",
-        "memberof": "ol.Base"
+        "module": "ol.Base"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [],
+            "filename": "base.js",
+            "lineno": 0,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
+            "code": {
+                "id": "astnode100000044",
+                "name": "exports",
+                "type": "Identifier",
+                "value": "localName",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "ol.Base",
+        "longname": "ol.Base",
+        "kind": "member",
+        "scope": "global",
+        "module": "ol.Base"
     },
     {
         "comment": "",
@@ -103,7 +125,7 @@
             "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
-                "id": "astnode100000058",
+                "id": "astnode100000062",
                 "name": "Base",
                 "type": "CallExpression",
                 "value": ""
@@ -125,7 +147,7 @@
             "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
-                "id": "astnode100000066",
+                "id": "astnode100000070",
                 "name": "ol",
                 "type": "CallExpression",
                 "value": ""
@@ -147,13 +169,12 @@
             "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
-                "id": "astnode100000074",
-                "name": "exports",
-                "type": "FunctionExpression",
-                "paramnames": []
+                "id": "astnode100000078",
+                "name": "someLocalName",
+                "type": "FunctionExpression"
             },
             "vars": {
-                "this.element": "ol.Child#element"
+                "this.element": "ol.Child#someLocalName#element"
             }
         },
         "augments": [
@@ -161,10 +182,11 @@
         ],
         "kind": "class",
         "api": "experimental",
-        "name": "ol.Child",
-        "longname": "ol.Child",
-        "scope": "global",
-        "module": "ol.Child"
+        "name": "someLocalName",
+        "longname": "ol.Child#someLocalName",
+        "scope": "instance",
+        "module": "ol.Child",
+        "memberof": "ol.Child"
     },
     {
         "comment": "/**\n   * @type {Object}\n   * @api stable\n   */",
@@ -174,7 +196,7 @@
             "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
-                "id": "astnode100000085",
+                "id": "astnode100000089",
                 "name": "this.element",
                 "type": "Literal",
                 "value": null,
@@ -188,12 +210,11 @@
         },
         "api": "stable",
         "name": "element",
-        "longname": "ol.Child#element",
+        "longname": "ol.Child#someLocalName#element",
         "kind": "member",
-        "memberof": "ol.Child",
+        "memberof": "ol.Child#someLocalName",
         "scope": "instance",
-        "module": "ol.Child",
-        "overrides": "ol.Base#element"
+        "module": "ol.Child"
     },
     {
         "comment": "/**\n * @inheritDoc\n */",
@@ -203,19 +224,41 @@
             "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
-                "id": "astnode100000098",
-                "name": "exports.toOverride",
+                "id": "astnode100000102",
+                "name": "someLocalName.toOverride",
                 "type": "FunctionExpression",
                 "paramnames": []
             }
         },
         "inheritdoc": "",
         "name": "toOverride",
-        "longname": "ol.Child.toOverride",
+        "longname": "ol.Child#someLocalName.toOverride",
         "kind": "function",
-        "scope": "instance",
-        "module": "ol.Child",
-        "memberof": "ol.Child"
+        "memberof": "ol.Child#someLocalName",
+        "scope": "static",
+        "module": "ol.Child"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [],
+            "filename": "child.js",
+            "lineno": 0,
+            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
+            "code": {
+                "id": "astnode100000109",
+                "name": "exports",
+                "type": "Identifier",
+                "value": "someLocalName",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "ol.Child",
+        "longname": "ol.Child",
+        "kind": "member",
+        "scope": "global",
+        "module": "ol.Child"
     },
     {
         "kind": "package",
@@ -226,51 +269,29 @@
         ]
     },
     {
-        "comment": "/**\n * @api\n */",
+        "comment": "/**\n * @constructor\n * @api\n */",
         "meta": {
             "range": [],
             "filename": "base.js",
             "lineno": 0,
             "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
             "code": {
-                "id": "astnode100000026",
-                "name": "exports.prototype.toOverride",
-                "type": "FunctionExpression",
-                "paramnames": []
+                "id": "astnode100000015",
+                "name": "localName",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "this.element": "ol.Base#localName#element"
             }
         },
+        "kind": "class",
         "api": "experimental",
-        "name": "toOverride",
-        "longname": "ol.Child#toOverride",
-        "kind": "function",
+        "name": "localName",
+        "longname": "ol.Child#someLocalName#localName",
         "scope": "instance",
         "module": "ol.Base",
-        "memberof": "ol.Child",
-        "inherits": "ol.Base#toOverride",
-        "inherited": true
-    },
-    {
-        "comment": "/**\n * @api\n */",
-        "meta": {
-            "range": [],
-            "filename": "base.js",
-            "lineno": 0,
-            "path": "/home/gberaudo/dev/ol3/test_doclets/inheritance/module",
-            "code": {
-                "id": "astnode100000035",
-                "name": "exports.prototype.onlyBase",
-                "type": "FunctionExpression",
-                "paramnames": []
-            }
-        },
-        "api": "experimental",
-        "name": "onlyBase",
-        "longname": "ol.Child#onlyBase",
-        "kind": "function",
-        "scope": "instance",
-        "module": "ol.Base",
-        "memberof": "ol.Child",
-        "inherits": "ol.Base#onlyBase",
+        "memberof": "ol.Child#someLocalName",
+        "inherits": "ol.Base#localName",
         "inherited": true
     }
 ]

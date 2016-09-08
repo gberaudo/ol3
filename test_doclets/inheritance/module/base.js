@@ -6,7 +6,7 @@ goog.module.declareLegacyNamespace();
  * @constructor
  * @api
  */
-exports = function() {
+var localName = function() {
 
   /**
    * @type {Object}
@@ -19,11 +19,13 @@ exports = function() {
 /**
  * @api
  */
-exports.prototype.toOverride = function () {
+localName.prototype.toOverride = function () {
 }
 
 /**
  * @api
  */
-exports.prototype.onlyBase = function () {
+localName.prototype.onlyBase = function () {
 };
+
+exports = localName;

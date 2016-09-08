@@ -1,13 +1,13 @@
 {
   "symbols": [
     {
-      "name": "ol.Base",
+      "name": "ol.Base#localName",
       "kind": "class",
       "stability": "experimental",
 
     },
     {
-      "name": "ol.Base#element",
+      "name": "ol.Base#localName#element",
       "kind": "member",
       "stability": "stable",
 
@@ -16,26 +16,26 @@
       ]
     },
     {
-      "name": "ol.Base#toOverride",
+      "name": "ol.Base#localName#toOverride",
       "kind": "function",
       "stability": "experimental",
 
     },
     {
-      "name": "ol.Base#onlyBase",
+      "name": "ol.Base#localName#onlyBase",
       "kind": "function",
       "stability": "experimental",
 
     },
     {
-      "name": "ol.Child",
+      "name": "ol.Child#someLocalName",
       "kind": "class",
       "stability": "experimental",
 
       "extends": "ol.Base"
     },
     {
-      "name": "ol.Child#element",
+      "name": "ol.Child#someLocalName#element",
       "kind": "member",
       "stability": "stable",
 
@@ -44,15 +44,8 @@
       ]
     },
     {
-      "name": "ol.Child#toOverride",
-      "kind": "function",
-      "stability": "experimental",
-      "inherited": true,
-
-    },
-    {
-      "name": "ol.Child#onlyBase",
-      "kind": "function",
+      "name": "ol.Child#someLocalName#localName",
+      "kind": "class",
       "stability": "experimental",
       "inherited": true,
 

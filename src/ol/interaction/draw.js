@@ -483,7 +483,7 @@ ol.interaction.Draw.prototype.startDrawing_ = function(event) {
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType_.DRAWSTART, this.sketchFeature_));
+      ol.interaction.Draw.EventType.DRAWSTART, this.sketchFeature_));
 };
 
 
@@ -609,7 +609,7 @@ ol.interaction.Draw.prototype.removeLastPoint = function() {
 
 /**
  * Stop drawing and add the sketch feature to the target layer.
- * The {@link ol.interaction.Draw.EventType_.DRAWEND} event is dispatched before
+ * The {@link ol.interaction.Draw.EventType.DRAWEND} event is dispatched before
  * inserting the feature.
  * @api
  */
@@ -639,7 +639,7 @@ ol.interaction.Draw.prototype.finishDrawing = function() {
 
   // First dispatch event to allow full set up of feature
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType_.DRAWEND, sketchFeature));
+      ol.interaction.Draw.EventType.DRAWEND, sketchFeature));
 
   // Then insert feature
   if (this.features_) {
@@ -686,7 +686,7 @@ ol.interaction.Draw.prototype.extend = function(feature) {
   this.sketchCoords_.push(last.slice());
   this.updateSketchFeatures_();
   this.dispatchEvent(new ol.interaction.Draw.Event(
-      ol.interaction.Draw.EventType_.DRAWSTART, this.sketchFeature_));
+      ol.interaction.Draw.EventType.DRAWSTART, this.sketchFeature_));
 };
 
 
@@ -842,7 +842,7 @@ ol.interaction.Draw.Mode_ = {
  * @constructor
  * @extends {ol.events.Event}
  * @implements {oli.DrawEvent}
- * @param {ol.interaction.Draw.EventType_} type Type.
+ * @param {ol.interaction.Draw.EventType} type Type.
  * @param {ol.Feature} feature The feature drawn.
  */
 ol.interaction.Draw.Event = function(type, feature) {
@@ -862,9 +862,8 @@ ol.inherits(ol.interaction.Draw.Event, ol.events.Event);
 
 /**
  * @enum {string}
- * @private
  */
-ol.interaction.Draw.EventType_ = {
+ol.interaction.Draw.EventType = {
   /**
    * Triggered upon feature draw start
    * @event ol.interaction.Draw.Event#drawstart

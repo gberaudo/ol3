@@ -96,6 +96,7 @@
           ]
         }
       ],
+      "valid-jsdoc": 0,
       "no-constant-condition": 0,
       "openlayers-internal/enum": 2,
       "openlayers-internal/no-duplicate-requires": 2,

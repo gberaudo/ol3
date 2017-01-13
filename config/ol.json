@@ -18,6 +18,7 @@
       "*"
     ],
     "jscomp_off": [
+      "analyzerChecks",
       "lintChecks"
     ],
     "extra_annotation_name": [

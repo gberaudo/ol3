@@ -45,6 +45,7 @@
     "rbush": "2.0.2"
   },
   "devDependencies": {
+    "@types/geojson": "^7946.0.4",
     "babel-core": "^6.26.3",
     "babel-plugin-jsdoc-closure": "1.5.1",
     "chaikin-smooth": "^1.0.4",

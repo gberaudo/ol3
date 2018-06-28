@@ -65,25 +65,16 @@ import {add as addTransformFunc, clear as clearTransformFuncs, get as getTransfo
 
 
 /**
- * A projection as {@link module:ol/proj/Projection}, SRS identifier
- * string or undefined.
- * @typedef {module:ol/proj/Projection|string|undefined} ProjectionLike
- * @api
- */
-
-
-/**
- * A transform function accepts an array of input coordinate values, an optional
- * output array, and an optional dimension (default should be 2).  The function
- * transforms the input coordinate values, populates the output array, and
- * returns the output array.
- *
- * @typedef {function(Array.<number>, Array.<number>=, number=): Array.<number>} TransformFunction
- * @api
+ * typedef {module:ol/proj/Projection|string|undefined} ProjectionLike
  */
 
 
 export {METERS_PER_UNIT};
+
+/**
+ * typedef {function(Array.<number>, Array.<number>=, number=): Array.<number>} TransformFunction
+ */
+
 
 
 /**

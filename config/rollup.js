@@ -15,7 +15,12 @@ export default {
     noderesolve(),
     commonjs(),
     buble(),
-    uglify(),
+    uglify({
+      compress: {
+        sequences: false, // workaround uglify bug with sequences
+        drop_console: true
+      }
+    }),
     sourcemaps()
   ]
 };

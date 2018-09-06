@@ -81,13 +81,13 @@ function generateExports(symbols, namespaces, imports) {
     }
   });
   const nsdefs = [];
-  const ns = Object.keys(namespaces).sort();
+  const ns = Object.keys(namespaces);
   for (let i = 0, ii = ns.length; i < ii; ++i) {
     if (namespaces[ns[i]]) {
       nsdefs.push(`${ns[i]} = {};`);
     }
   }
-  blocks = imports.concat('\nvar ol = window[\'ol\'] = {};\n', nsdefs.sort()).concat(blocks.sort());
+  blocks = imports.concat('\nvar ol = window[\'ol\'] = {};\n', [...nsdefs, ...blocks].sort());
   blocks.push('');
   return blocks.join('\n');
 }

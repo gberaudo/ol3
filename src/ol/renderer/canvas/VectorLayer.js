@@ -87,6 +87,12 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
     canvas.className = this.getLayer().getClassName();
 
     listen(labelCache, EventType.CLEAR, this.handleFontsChanged_, this);
+
+    /**
+     * @private
+     * @type {Object<string, HTMLCanvasElement|HTMLVideoElement|HTMLImageElement>}
+     */
+    this.imageLookup_ = {};
   }
 
   /**
@@ -485,7 +491,9 @@ class CanvasVectorLayerRenderer extends CanvasLayerRenderer {
     const replayGroupInstructions = replayGroup.finish();
     const renderingReplayGroup = new InstructionsGroupExecutor(
       getRenderTolerance(resolution, pixelRatio), extent, resolution,
-      pixelRatio, vectorSource.getOverlaps(), this.declutterTree_, vectorLayer.getRenderBuffer());
+      pixelRatio, vectorSource.getOverlaps(), this.declutterTree_,
+      this.imageLookup_, this.handleStyleImageChange_.bind(this, null),
+      vectorLayer.getRenderBuffer());
     renderingReplayGroup.replaceInstructions(replayGroupInstructions);
 
     this.renderedResolution_ = resolution;

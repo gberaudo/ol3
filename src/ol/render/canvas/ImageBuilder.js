@@ -201,7 +201,7 @@ class CanvasImageBuilder extends CanvasInstructionsBuilder {
     this.anchorY_ = anchor[1];
     this.declutterGroup_ = /** @type {import("../canvas.js").DeclutterGroup} */ (declutterGroup);
     this.hitDetectionImage_ = hitDetectionImage;
-    this.image_ = image;
+    this.image_ = image.src;
     this.height_ = size[1];
     this.opacity_ = imageStyle.getOpacity();
     this.originX_ = origin[0];

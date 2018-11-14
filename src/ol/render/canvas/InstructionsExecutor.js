@@ -54,9 +54,11 @@ class CanvasInstructionsExecutor {
    * @param {number} resolution Resolution.
    * @param {number} pixelRatio Pixel ratio.
    * @param {boolean} overlaps The replay can have overlapping geometries.
+   * @param {Object<string, HTMLCanvasElement|HTMLVideoElement|HTMLImageElement>} imageLookup A lookup object for images.
+   * @param {function()} onImageLookupChanged A function to call when the image lookup has changed.
    * @param {?} declutterTree Declutter tree.
    */
-  constructor(tolerance, maxExtent, resolution, pixelRatio, overlaps, declutterTree) {
+  constructor(tolerance, maxExtent, resolution, pixelRatio, overlaps, imageLookup, onImageLookupChanged, declutterTree) {
 
     /**
      * @type {?}
@@ -214,6 +216,19 @@ class CanvasInstructionsExecutor {
      * @type {Object<string, Object<string, number>>}
      */
     this.widths_ = {};
+
+
+    /**
+     * @private
+     * @type {Object<string, HTMLCanvasElement|HTMLVideoElement|HTMLImageElement>}
+     */
+    this.imageLookup_ = imageLookup;
+
+    /**
+     * @private
+     * @type {function()}
+     */
+    this.onImageLookupChanged_ = onImageLookupChanged;
   }
 
 
@@ -566,7 +581,7 @@ class CanvasInstructionsExecutor {
     const ii = instructions.length; // end of instructions
     let d = 0; // data index
     let dd; // end of per-instruction data
-    let anchorX, anchorY, prevX, prevY, roundX, roundY, declutterGroup, image;
+    let anchorX, anchorY, prevX, prevY, roundX, roundY, declutterGroup, image, imageKey;
     let pendingFill = 0;
     let pendingStroke = 0;
     let lastFillInstruction = null;
@@ -658,8 +673,16 @@ class CanvasInstructionsExecutor {
         case CanvasInstruction.DRAW_IMAGE:
           d = /** @type {number} */ (instruction[1]);
           dd = /** @type {number} */ (instruction[2]);
-          image = /** @type {HTMLCanvasElement|HTMLVideoElement|HTMLImageElement} */
-              (instruction[3]);
+          imageKey = /** @type {string} */ (instruction[3]);
+
+          image = this.imageLookup_[imageKey];
+          if (!image) {
+            image = this.imageLookup_[imageKey] = new Image();
+            image.src = imageKey;
+            image.onload = this.onImageLookupChanged_;
+            return undefined;
+          }
+          
           // Remaining arguments in DRAW_IMAGE are in alphabetical order
           anchorX = /** @type {number} */ (instruction[4]);
           anchorY = /** @type {number} */ (instruction[5]);

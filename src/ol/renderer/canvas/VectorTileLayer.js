@@ -92,6 +92,12 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
     listen(labelCache, EventType.CLEAR, this.handleFontsChanged_, this);
 
+
+    /**
+     * @private
+     * @type {Object<string, HTMLCanvasElement|HTMLVideoElement|HTMLImageElement>}
+     */
+    this.imageLookup_ = {};
   }
 
   /**
@@ -229,7 +235,9 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       }
       const replayGroupInstructions = replayGroup.finish();
       const renderingReplayGroup = new InstructionsGroupExectuor(0, sharedExtent, resolution,
-        pixelRatio, source.getOverlaps(), this.declutterTree_, layer.getRenderBuffer());
+        pixelRatio, source.getOverlaps(), this.declutterTree_,
+        this.imageLookup_, this.handleStyleImageChange_.bind(this, null),
+        layer.getRenderBuffer());
       renderingReplayGroup.replaceInstructions(replayGroupInstructions);
       sourceTile.setReplayGroup(layer, tile.tileCoord.toString(), renderingReplayGroup);
     }

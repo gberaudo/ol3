@@ -22,6 +22,8 @@ class InstructionsGroupExectuor extends ReplayGroup {
    * @param {number} pixelRatio Pixel ratio.
    * @param {boolean} overlaps The replay group can have overlapping geometries.
    * @param {?} declutterTree Declutter tree for declutter processing in postrender.
+   * @param {Object<string, HTMLCanvasElement|HTMLVideoElement|HTMLImageElement>} imageLookup A lookup object for images.
+   * @param {function()} onImageLookupChanged A function to call when the image lookup has changed.
    * @param {number=} opt_renderBuffer Optional rendering buffer.
    */
   constructor(
@@ -31,6 +33,8 @@ class InstructionsGroupExectuor extends ReplayGroup {
     pixelRatio,
     overlaps,
     declutterTree,
+    imageLookup,
+    onImageLookupChanged,
     opt_renderBuffer
   ) {
     super();
@@ -100,6 +104,18 @@ class InstructionsGroupExectuor extends ReplayGroup {
      * @type {import("../../transform.js").Transform}
      */
     this.hitDetectionTransform_ = createTransform();
+
+    /**
+     * @private
+     * @type {Object<string, HTMLCanvasElement|HTMLVideoElement|HTMLImageElement>}
+     */
+    this.imageLookup_ = imageLookup;
+
+    /**
+     * @private
+     * @type {function()}
+     */
+    this.onImageLookupChanged_ = onImageLookupChanged;
   }
 
   /**
@@ -312,7 +328,8 @@ class InstructionsGroupExectuor extends ReplayGroup {
     let replay = replays[replayType];
     if (replay === undefined) {
       replay = new CanvasInstructionsExecutor(this.tolerance_, this.maxExtent_,
-        this.resolution_, this.pixelRatio_, this.overlaps_, this.declutterTree_);
+        this.resolution_, this.pixelRatio_, this.overlaps_, this.imageLookup_,
+        this.onImageLookupChanged_, this.declutterTree_);
       replays[replayType] = replay;
     }
     return replay;

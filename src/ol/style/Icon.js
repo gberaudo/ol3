@@ -8,7 +8,7 @@ import {asArray} from '../color.js';
 import {listen, unlisten} from '../events.js';
 import EventType from '../events/EventType.js';
 import IconAnchorUnits from './IconAnchorUnits.js';
-import {get as getIconImage} from './IconImage.js';
+import {get as getIconImage} from './IconImage.js'; // remove it
 import IconOrigin from './IconOrigin.js';
 import ImageStyle from './Image.js';
 
@@ -170,7 +170,8 @@ class Icon extends ImageStyle {
      * @private
      * @type {import("./IconImage.js").default}
      */
-    this.iconImage_ = getIconImage(
+    this.iconImage_ = getIconImage( // just put the image here
+      // add crossorigin and color to the draw_image instruction
       image, /** @type {string} */ (src), imgSize, this.crossOrigin_, imageState, this.color_);
 
     /**
@@ -300,6 +301,9 @@ class Icon extends ImageStyle {
     return this.iconImage_.getImage(pixelRatio);
   }
 
+  //  return the passed image or null if we got an src
+  // idem for the size
+  // add method to return
   /**
    * @override
    */
@@ -363,7 +367,7 @@ class Icon extends ImageStyle {
    * @return {string|undefined} Image src.
    * @api
    */
-  getSrc() {
+  getSrc() { // change to return the src or null
     return this.iconImage_.getSrc();
   }
 

@@ -153,13 +153,14 @@ class RegularShape extends ImageStyle {
      */
     this.hitDetectionImageSize_ = null;
 
-    /**
-     * @protected
-     * @type {import("./AtlasManager.js").default|undefined}
-     */
-    this.atlasManager_ = options.atlasManager;
+    // remove this
+    // /**
+    //  * @protected
+    //  * @type {import("./AtlasManager.js").default|undefined}
+    //  */
+    // this.atlasManager_ = options.atlasManager;
 
-    this.render_(this.atlasManager_);
+    // this.render_(this.atlasManager_);
 
   }
 

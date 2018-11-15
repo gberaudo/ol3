@@ -26,7 +26,7 @@ class IconImageCache {
     * @type {number}
     * @private
     */
-    this.maxCacheSize_ = 32;
+    this.maxCacheSize_ = 512;
   }
 
   /**

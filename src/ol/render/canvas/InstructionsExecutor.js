@@ -317,6 +317,8 @@ class CanvasInstructionsExecutor {
     this.strokeStates = instructions.strokeStates;
   }
 
+  // create a replayRegularShape_ method
+
   /**
    * @param {CanvasRenderingContext2D} context Context.
    * @param {import("../../coordinate.js").Coordinate} p1 1st point of the background box.
@@ -675,8 +677,13 @@ class CanvasInstructionsExecutor {
           dd = /** @type {number} */ (instruction[2]);
           imageKey = /** @type {string} */ (instruction[3]);
 
+          // handle text drawing to an image (synchronous)
+
           image = this.imageLookup_[imageKey];
           if (!image) {
+            // Use get from iconimage.js
+            // listenOnce for the change event and trigger onImageLookupChanged_
+
             image = this.imageLookup_[imageKey] = new Image();
             image.src = imageKey;
             image.onload = this.onImageLookupChanged_;

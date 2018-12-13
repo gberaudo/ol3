@@ -5,6 +5,7 @@ import VectorTileLayer from '../src/ol/layer/VectorTile.js';
 import VectorTileSource from '../src/ol/source/VectorTile.js';
 import {Fill, Icon, Stroke, Style, Text} from '../src/ol/style.js';
 
+import {workerfeatureloader} from '../src/ol/worker/loader.js';
 
 const key = 'pk.eyJ1IjoiYWhvY2V2YXIiLCJhIjoiRk1kMWZaSSJ9.E5BkluenyWQMsBLsuByrmg';
 
@@ -13,6 +14,7 @@ const map = new Map({
     new VectorTileLayer({
       declutter: true,
       source: new VectorTileSource({
+        tileLoadFunction: workerfeatureloader,
         attributions: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> ' +
           '© <a href="https://www.openstreetmap.org/copyright">' +
           'OpenStreetMap contributors</a>',

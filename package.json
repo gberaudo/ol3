@@ -19,6 +19,7 @@
     "serve-examples": "webpack-dev-server --config examples/webpack/config.js --mode development --watch",
     "build-examples": "webpack --config examples/webpack/config.js --mode production",
     "build-package": "npm run transpile && npm run copy-css && node tasks/prepare-package && shx cp README.md build/ol",
+    "build-worker-wp": "webpack --config config/webpack-config-worker-build.js && node tasks/prepare-worker",
     "build-index": "npm run build-package && node tasks/generate-index",
     "build-legacy": "shx rm -rf build && npm run build-index && webpack --config config/webpack-config-legacy-build.js && cleancss --source-map src/ol/ol.css -o build/legacy/ol.css",
     "copy-css": "shx cp src/ol/ol.css build/ol/ol.css",

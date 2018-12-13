@@ -73,17 +73,20 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     this.overlayContext_ = createCanvasContext2D();
 
     const overlayCanvas = this.overlayContext_.canvas;
-    overlayCanvas.style.position = 'absolute';
-    overlayCanvas.style.transformOrigin = 'top left';
+    let container = null;
+    if (overlayCanvas.style) {
+      overlayCanvas.style.position = 'absolute';
+      overlayCanvas.style.transformOrigin = 'top left';
 
-    const container = document.createElement('div');
-    const style = container.style;
-    style.position = 'absolute';
-    style.width = '100%';
-    style.height = '100%';
+      container = document.createElement('div');
+      const style = container.style;
+      style.position = 'absolute';
+      style.width = '100%';
+      style.height = '100%';
 
-    container.appendChild(baseCanvas);
-    container.appendChild(overlayCanvas);
+      container.appendChild(baseCanvas);
+      container.appendChild(overlayCanvas);
+    }
 
     /**
      * @private
@@ -443,7 +446,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       canvas.width = width;
       canvas.height = height;
       const canvasTransform = transformToString(this.overlayPixelTransform_);
-      if (canvas.style.transform !== canvasTransform) {
+      if (canvas.style && canvas.style.transform !== canvasTransform) {
         canvas.style.transform = canvasTransform;
       }
     } else {
@@ -508,7 +511,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     }
 
     const opacity = layerState.opacity;
-    if (opacity !== canvas.style.opacity) {
+    if (canvas.style && opacity !== canvas.style.opacity) {
       canvas.style.opacity = opacity;
     }
 

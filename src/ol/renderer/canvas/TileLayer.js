@@ -303,12 +303,12 @@ class CanvasTileLayerRenderer extends CanvasLayerRenderer {
     }
 
     const opacity = layerState.opacity;
-    if (opacity !== canvas.style.opacity) {
+    if (canvas.style && opacity !== canvas.style.opacity) {
       canvas.style.opacity = opacity;
     }
 
     const canvasTransform = transformToString(this.pixelTransform_);
-    if (canvasTransform !== canvas.style.transform) {
+    if (canvas.style && canvasTransform !== canvas.style.transform) {
       canvas.style.transform = canvasTransform;
     }
 

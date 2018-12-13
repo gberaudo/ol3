@@ -8,6 +8,7 @@ import EventTarget from '../events/Target.js';
 import EventType from '../events/EventType.js';
 import ImageState from '../ImageState.js';
 import {shared as iconImageCache} from './IconImageCache.js';
+import { createCanvas } from '../canvas.js';
 
 class IconImage extends EventTarget {
   /**
@@ -42,9 +43,7 @@ class IconImage extends EventTarget {
      * @private
      * @type {HTMLCanvasElement}
      */
-    this.canvas_ = color ?
-      /** @type {HTMLCanvasElement} */ (document.createElement('canvas')) :
-      null;
+    this.canvas_ = color ? createCanvas() : null;
 
     /**
      * @private

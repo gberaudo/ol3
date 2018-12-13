@@ -2,3 +2,6 @@
 /coverage/
 /dist/
 node_modules/
+/package-lock.json
+/src/ol/worker/export.js
+

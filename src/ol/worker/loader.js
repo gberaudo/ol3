@@ -1,9 +1,13 @@
 import MVT from '../format/MVT';
 import RenderFeature from '../render/Feature';
-import OLWorker from './export';
+// import OLWorker from './export';
 
-const blob = new Blob([OLWorker], {type: 'application/javascript'});
-const worker = new Worker(URL.createObjectURL(blob));
+// eslint-disable-next-line
+// @ts-ignore import/no-unresolved
+const MyWorker = require('worker-loader?name=hashed.worker.js!./worker.js');
+//const blob = new Blob([OLWorker], {type: 'application/javascript'});
+//const worker = new Worker(URL.createObjectURL(blob));
+const worker = new MyWorker();
 
 const format = new MVT();
 const projection = format.readProjection();

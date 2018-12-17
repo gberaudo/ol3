@@ -86,11 +86,16 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
       container.appendChild(baseCanvas);
       container.appendChild(overlayCanvas);
+    } else {
+      container = [
+        baseCanvas,
+        overlayCanvas
+      ];
     }
 
     /**
      * @private
-     * @type {HTMLElement}
+     * @type {*}
      */
     this.container_ = container;
 

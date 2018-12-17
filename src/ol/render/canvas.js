@@ -288,24 +288,25 @@ function getMeasureContext() {
  * @return {import("../size.js").Size} Measurement.
  */
 export const measureTextHeight = (function() {
-  let span;
-  const heights = textHeights;
+  // let span;
+  // const heights = textHeights;
   return function(font) {
-    let height = heights[font];
-    if (height == undefined) {
-      if (!span) {
-        span = document.createElement('span');
-        span.textContent = 'M';
-        span.style.margin = span.style.padding = '0 !important';
-        span.style.position = 'absolute !important';
-        span.style.left = '-99999px !important';
-      }
-      span.style.font = font;
-      document.body.appendChild(span);
-      height = heights[font] = span.offsetHeight;
-      document.body.removeChild(span);
-    }
-    return height;
+    return 12; // Yes 12 is one-ring-to-rule-them-all answer to all this complexity
+    // let height = heights[font];
+    // if (height == undefined) {
+    //   if (!span) {
+    //     span = document.createElement('span');
+    //     span.textContent = 'M';
+    //     span.style.margin = span.style.padding = '0 !important';
+    //     span.style.position = 'absolute !important';
+    //     span.style.left = '-99999px !important';
+    //   }
+    //   span.style.font = font;
+    //   document.body.appendChild(span);
+    //   height = heights[font] = span.offsetHeight;
+    //   document.body.removeChild(span);
+    // }
+    // return height;
   };
 })();
 

@@ -16,6 +16,7 @@ import ReplayType from '../../render/canvas/BuilderType.js';
 import {labelCache} from '../../render/canvas.js';
 import CanvasBuilderGroup from '../../render/canvas/BuilderGroup.js';
 import CanvasTileLayerRenderer from './TileLayer.js';
+import {get as getProjection} from '../../proj.js';
 import {getSquaredTolerance as getSquaredRenderTolerance, renderFeature} from '../vector.js';
 import {
   apply as applyTransform,
@@ -31,6 +32,28 @@ import {
 import CanvasExecutorGroup, {replayDeclutter} from '../../render/canvas/ExecutorGroup.js';
 import {isEmpty} from '../../obj.js';
 
+function resizeCanvas(canvas, img) {
+  if (canvas.width !== img.width) {
+    canvas.width = img.width;
+  }
+  if (canvas.height !== img.height) {
+    canvas.height = img.height;
+  }
+}
+
+function pushImage(canvas, img) {
+  // Most efficient method
+  resizeCanvas(canvas, img);
+  canvas.getContext('bitmaprenderer').transferFromImageBitmap(img);
+  img.close();
+}
+
+function drawImage(canvas, img) {
+  // Less efficient method (copy)
+  resizeCanvas(canvas, img);
+  canvas.getContext('2d').drawImage(img, 0, 0);
+  img.close();
+}
 
 /**
  * @type {!Object<string, Array<import("../../render/canvas/BuilderType.js").default>>}
@@ -65,6 +88,13 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     super(layer);
 
     const baseCanvas = this.context.canvas;
+
+    this.tilesByOpaqueId_ = {};
+
+    this.worker_ = layer.getWorker();
+    if (this.worker_) {
+      this.worker_.addEventListener('message', this.onWorkerMessageReceived_.bind(this), false);
+    }
 
     /**
      * @private
@@ -155,6 +185,27 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
   }
 
+  onWorkerMessageReceived_(event) {
+    console.log('received event in main thread', event.data);
+    const {images, action, opaqueTileId} = event.data;
+    if (action === 'preparedTile') {
+      const tile = this.tilesByOpaqueId_[opaqueTileId];
+      const pixelRatio = tile['pixelRatio'];
+      const projection = tile['projection'];
+      const image = images[0];
+      const canvas = /** @type {HTMLCanvasElement} */ (document.createElement('canvas'));
+      tile.getContext(this.getLayer(), canvas.getContext('bitmaprenderer'));
+      pushImage(canvas, image);
+      this.updateExecutorGroup_(tile, pixelRatio, projection);
+      tile.setState(TileState.LOADED);
+    } else if (action === 'failedTilePreparation') {
+      const tile = this.tilesByOpaqueId_[opaqueTileId];
+      tile.setState(TileState.ERROR);
+      console.log('Failed', opaqueTileId);
+    }
+    delete this.tilesByOpaqueId_[opaqueTileId];
+  }
+
   /**
    * @inheritDoc
    */
@@ -185,19 +236,63 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     }
   }
 
+  prepareTileInWorker(z, x, y, pixelRatio, projection) {
+    const tile = this.getTile(z, x, y, pixelRatio, projection);
+    tile.load();
+    const that = this;
+    const promise = new Promise(function(resolve, reject) {
+      tile.addEventListener('change', () => {
+        const state = tile.getState();
+        if (state === TileState.LOADED) {
+          that.renderTileImage_(tile, pixelRatio, projection);
+          resolve(tile);
+        }
+        if (state === TileState.ERROR) {
+          reject(tile);
+        }
+      });
+    });
+    return promise;
+  }
+
   /**
    * @inheritDoc
    */
   getTile(z, x, y, pixelRatio, projection) {
     const tile = /** @type {import("../../VectorRenderTile.js").default} */ (super.getTile(z, x, y, pixelRatio, projection));
-    if (tile.getState() < TileState.LOADED) {
-      const tileUid = getUid(tile);
-      if (!(tileUid in this.tileListenerKeys_)) {
-        const listenerKey = listen(tile, EventType.CHANGE, this.prepareTile.bind(this, tile, pixelRatio, projection));
-        this.tileListenerKeys_[tileUid] = listenerKey;
+    const tileUid = getUid(tile);
+//     console.log(tileUid, tile.getState(), 'getTile(', z, x, y, ') / ';
+    const worker = this.worker_;
+    const tilesByOpaqueId = this.tilesByOpaqueId_;
+    if (this.worker_) {
+      if (tile.getState() < TileState.LOADED && !tilesByOpaqueId[tileUid]) {
+        tile['load'] = function() {
+          if (tile.getState() === TileState.IDLE) {
+            console.log(tileUid, tile.getState(), 'load tile(', z, x, y, ') ');
+            tile.setState(TileState.LOADING);
+            tile['pixelRatio'] = pixelRatio;
+            tile['projection'] = projection;
+            const tileCoord = tile.getTileCoord();
+            tilesByOpaqueId[tileUid] = tile;
+            worker.postMessage({
+              action: 'prepareTile',
+              tileCoord: tileCoord,
+              opaqueTileId: tileUid,
+              pixelRatio: pixelRatio
+            });
+          }
+          return [];
+        };
       }
     } else {
-      this.prepareTile(tile, pixelRatio, projection);
+      if (tile.getState() < TileState.LOADED) {
+        if (!(tileUid in this.tileListenerKeys_)) {
+          const listenerKey = listen(tile, EventType.CHANGE, this.prepareTile.bind(this, tile, pixelRatio, projection));
+          this.tileListenerKeys_[tileUid] = listenerKey;
+        }
+      } else {
+        this.prepareTile(tile, pixelRatio, projection);
+      }
     }
     return tile;
   }
@@ -227,6 +322,13 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       this.renderedTiles.length = 0;
     }
     this.renderedLayerRevision_ = layerRevision;
+    if (this.worker_) {
+      const keys = Object.keys(this.tilesByOpaqueId_);
+      if (keys.length) {
+        console.log(keys.length, keys);
+      }
+    }
+
     return super.prepareFrame(frameState, layerState);
   }
 

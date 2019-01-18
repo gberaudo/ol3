@@ -11,6 +11,7 @@ import {assign} from '../obj.js';
 
 /**
  * @typedef {Object} Options
+ * @propery {Worker} [worker] An optional worker for optimized rendering.
  * @property {number} [opacity=1] Opacity (0, 1).
  * @property {boolean} [visible=true] Visibility.
  * @property {import("../extent.js").Extent} [extent] The bounding extent for layer rendering.  The layer will not be
@@ -78,6 +79,7 @@ class VectorTileLayer extends BaseVectorLayer {
    */
   constructor(opt_options) {
     const options = opt_options ? opt_options : {};
+    this.worker_ = options.worker;
 
     const baseOptions = /** @type {Object} */ (assign({}, options));
     delete baseOptions.preload;
@@ -123,6 +125,12 @@ class VectorTileLayer extends BaseVectorLayer {
     return this.renderMode_;
   }
 
+  /**
+   * @return {Worker} An optional worker.
+   */
+  getWorker() {
+    return this.worker_;
+  }
   /**
    * Return the level as number to which we will preload tiles up to.
    * @return {number} The level to preload tiles up to.

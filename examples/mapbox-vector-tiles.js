@@ -3,7 +3,6 @@ import View from '../src/ol/View.js';
 import MVT from '../src/ol/format/MVT.js';
 import VectorTileLayer from '../src/ol/layer/VectorTile.js';
 import VectorTileSource from '../src/ol/source/VectorTile.js';
-import {Fill, Icon, Stroke, Style, Text} from '../src/ol/style.js';
 
 // eslint-disable-next-line
 // @ts-ignore import/no-unresolved
@@ -20,6 +19,7 @@ const map = new Map({
     new VectorTileLayer({
       worker: worker,
       declutter: true,
+      useInterimTilesOnError: false,
       source: new VectorTileSource({
         attributions: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> ' +
           '© <a href="https://www.openstreetmap.org/copyright">' +
@@ -33,11 +33,11 @@ const map = new Map({
   ],
   target: 'map',
   view: new View({
-    center: [0, 0],
-    zoom: 2
+    center: [730737.990406, 5874032.749659],
+    zoom: 17
   })
 });
 
-setInterval(function() {
-  map.render(); // FIXME: force rendering
-}, 10);
+// setInterval(function() {
+//   map.render(); // FIXME: force rendering
+// }, 10);

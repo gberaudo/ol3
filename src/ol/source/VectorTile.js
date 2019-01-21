@@ -178,6 +178,9 @@ class VectorTile extends UrlTile {
   getSourceTiles(pixelRatio, projection, tile) {
     const sourceTiles = [];
     const urlTileCoord = tile.wrappedTileCoord;
+    if (tile.opaque) {
+      console.log('getSourceTiles opaque', tile.opaque, urlTileCoord);
+    }
     if (urlTileCoord) {
       const tileGrid = this.getTileGridForProjection(projection);
       const extent = tileGrid.getTileCoordExtent(urlTileCoord);
@@ -267,6 +270,9 @@ class VectorTile extends UrlTile {
           this.addSourceTiles(tile, sourceTiles);
         }
       }
+    }
+    if (tile.opaque) {
+      console.log('getSourceTiles opaque xxx ', tile.opaque, sourceTiles);
     }
     return sourceTiles;
   }

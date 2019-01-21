@@ -1,14 +1,18 @@
 import MVT from '../format/MVT';
 import VectorTileLayer from '../layer/VectorTile.js';
 import VectorTileSource from '../source/VectorTile.js';
-import {Fill, Icon, Stroke, Style, Text} from '../style.js';
+// This is not working: use of document.createCanvas, measureText, new Image.
+// import stylefunction from 'ol-mapbox-style/stylefunction';
 import {createMapboxStreetsV6Style} from './mapbox-streets-v6-style.js';
 import {get as getProjection} from '../proj.js';
+import {Style, Fill, Icon} from '../style';
+import Stroke from '../style/Stroke';
 
 const key = 'pk.eyJ1IjoiYWhvY2V2YXIiLCJhIjoiRk1kMWZaSSJ9.E5BkluenyWQMsBLsuByrmg';
 
 const layer = new VectorTileLayer({
-  declutter: true,
+  declutter: false,
+  useInterimTilesOnError: false,
   source: new VectorTileSource({
     attributions: '© <a href="https://www.mapbox.com/map-feedback/">Mapbox</a> ' +
       '© <a href="https://www.openstreetmap.org/copyright">' +
@@ -16,9 +20,17 @@ const layer = new VectorTileLayer({
     format: new MVT(),
     url: 'https://{a-d}.tiles.mapbox.com/v4/mapbox.mapbox-streets-v6/' +
         '{z}/{x}/{y}.vector.pbf?access_token=' + key
-  }),
-  style: createMapboxStreetsV6Style(Style, Fill, Stroke, Icon, Text)
+  })
 });
+
+// layer.setStyle(createMapboxStreetsV6Style(Style, Fill, Stroke, Icon, Text));
+// const superStyle = 'https://maps.tilehosting.com/styles/bright/style.json?key=ER67WIiPdCQvhgsUjoWK';
+// fetch(superStyle)
+//   .then(r => r.json())
+//   .then((glStyle) => {
+//     stylefunction(layer, glStyle, 'states');
+//   });
+
 
 const renderer = /** @type {CanvasVectorTileLayerRenderer} */ (layer.createRenderer());
 const epsg3857 = getProjection('EPSG:3857');
@@ -42,9 +54,10 @@ function success(opaqueTileId, tile) {
   }, [bitmap]);
 }
 
-function failure(opaqueTileId) {
+function failure(opaqueTileId, tile) {
   self.postMessage({
     action: 'failedTilePreparation',
+    state: tile.getState(),
     opaqueTileId,
   });
 }
@@ -55,7 +68,7 @@ self.onmessage = function(event) {
   console.assert(action === 'prepareTile');
   const {opaqueTileId, tileCoord, pixelRatio} = event.data;
   const [z, x, y] = tileCoord;
-  renderer.prepareTileInWorker(z, x, y, pixelRatio, epsg3857).then(
+  renderer.prepareTileInWorker(z, x, y, pixelRatio, epsg3857, opaqueTileId).then(
     success.bind(null, opaqueTileId),
     failure.bind(null, opaqueTileId)
   );

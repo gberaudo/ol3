@@ -32,6 +32,9 @@ import {
 import CanvasExecutorGroup, {replayDeclutter} from '../../render/canvas/ExecutorGroup.js';
 import {isEmpty} from '../../obj.js';
 
+const dateByTile = {};
+let stop = false;
+
 function resizeCanvas(canvas, img) {
   if (canvas.width !== img.width) {
     canvas.width = img.width;
@@ -197,13 +200,17 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       tile.getContext(this.getLayer(), canvas.getContext('bitmaprenderer'));
       pushImage(canvas, image);
       this.updateExecutorGroup_(tile, pixelRatio, projection);
+      tile.hifi = true;
       tile.setState(TileState.LOADED);
     } else if (action === 'failedTilePreparation') {
       const tile = this.tilesByOpaqueId_[opaqueTileId];
-      tile.setState(TileState.ERROR);
+      const state = event.data.state;
+      tile.hifi = true;
+      tile.setState(state);
       console.log('Failed', opaqueTileId);
     }
     delete this.tilesByOpaqueId_[opaqueTileId];
+    delete dateByTile[opaqueTileId];
   }
 
   /**
@@ -236,22 +243,50 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     }
   }
 
-  prepareTileInWorker(z, x, y, pixelRatio, projection) {
+  prepareTileInWorker(z, x, y, pixelRatio, projection, opaqueTileId) {
     const tile = this.getTile(z, x, y, pixelRatio, projection);
-    tile.load();
+    tile.opaque = opaqueTileId;
+    const state = tile.getState();
+    if (state === TileState.LOADING) {
+      console.log('in worker getTile is loading, no luck', opaqueTileId, tile, state);
+      console.log('this case results in a never released pending request');
+    }
+    if (state >= TileState.LOADED) {
+      console.log('in worker getTile already known', opaqueTileId, tile, state);
+      return new Promise(function(resolve, reject) {
+        state === TileState.LOADED ? resolve(tile) : reject(tile);
+      });
+    }
+
     const that = this;
     const promise = new Promise(function(resolve, reject) {
-      tile.addEventListener('change', () => {
-        const state = tile.getState();
-        if (state === TileState.LOADED) {
-          that.renderTileImage_(tile, pixelRatio, projection);
-          resolve(tile);
+      const listener = () => {
+        try {
+          const state = tile.getState();
+          if (state === TileState.LOADED) {
+            console.log('prepareTileInWorker loaded', opaqueTileId, state);
+            that.renderTileImage_(tile, pixelRatio, projection);
+            console.log('prepareTileInWorker loaded after renderTileImage', opaqueTileId, state);
+            tile.removeEventListener('change', listener);
+            resolve(tile);
+          } else if (state === TileState.ERROR) {
+            console.log('prepareTileInWorker error', opaqueTileId, state);
+            tile.removeEventListener('change', listener);
+            reject(tile);
+          } else {
+            if (state > TileState.LOADED) {
+              console.log('other state', opaqueTileId, state);
+            }
+          }
+        } catch (e) {
+          console.log('prepareTileInWorker catch error', opaqueTileId, state);
+          tile.setState(TileState.ERROR);
         }
-        if (state === TileState.ERROR) {
-          reject(tile);
-        }
-      });
+      };
+      tile.addEventListener('change', listener);
     });
+    tile.load();
+    console.log('prepareTileInWorker after tile.load()', opaqueTileId, state);
     return promise;
   }
 
@@ -274,6 +309,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
             tile['projection'] = projection;
             const tileCoord = tile.getTileCoord();
             tilesByOpaqueId[tileUid] = tile;
+            dateByTile[tileUid] = Date.now();
             worker.postMessage({
               action: 'prepareTile',
               tileCoord: tileCoord,
@@ -324,8 +360,13 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     this.renderedLayerRevision_ = layerRevision;
     if (this.worker_) {
       const keys = Object.keys(this.tilesByOpaqueId_);
-      if (keys.length) {
-        console.log(keys.length, keys);
+      if (keys.length > 0 && dateByTile[keys[0]] + 3000 < Date.now() && !stop) {
+        console.log('It is more than 3s we are waiting for', keys[0], Date.now() - dateByTile[keys[0]]);
+        debugger;
+        stop = true;
+      }
+      if (keys.length && !stop) {
+        //console.log(keys.length, keys);
       }
     }
 

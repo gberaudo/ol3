@@ -1,4 +1,4 @@
-import { createCanvas } from "./canvas";
+import {createCanvas} from './canvas';
 
 /**
  * @module ol/webgl

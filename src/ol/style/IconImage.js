@@ -33,11 +33,13 @@ class IconImage extends EventTarget {
      * @private
      * @type {HTMLImageElement|HTMLCanvasElement}
      */
-    this.image_ = !image ? new Image() : image;
+    this.image_ = (!image && typeof Image !== 'undefined') ? new Image() : image;
 
-    if (crossOrigin !== null) {
+    if (this.image_ && crossOrigin !== null) {
       /** @type {HTMLImageElement} */ (this.image_).crossOrigin = crossOrigin;
     }
+
+    this.crossOrigin_ = crossOrigin;
 
     /**
      * @private
@@ -180,22 +182,43 @@ class IconImage extends EventTarget {
     return this.src_;
   }
 
+  loadImageWithDom_() {
+    this.imageListenerKeys_ = [
+      listenOnce(this.image_, EventType.ERROR,
+        this.handleImageError_, this),
+      listenOnce(this.image_, EventType.LOAD,
+        this.handleImageLoad_, this)
+    ];
+    try {
+      /** @type {HTMLImageElement} */ (this.image_).src = this.src_;
+    } catch (e) {
+      this.handleImageError_();
+    }
+  }
+
+  loadImageWithinWorker_() {
+    this.imageListenerKeys_ = [];
+    fetch(this.src_, {mode: 'cors'})
+      .then(response => response.blob())
+      .then(blob => createImageBitmap(blob))
+      .then(bitmap => {
+        this.image_ = /** @type {any} */ (bitmap);
+        this.handleImageLoad_();
+      }, () => {
+        this.handleImageError_();
+      });
+  }
+
   /**
    * Load not yet loaded URI.
    */
   load() {
     if (this.imageState_ == ImageState.IDLE) {
       this.imageState_ = ImageState.LOADING;
-      this.imageListenerKeys_ = [
-        listenOnce(this.image_, EventType.ERROR,
-          this.handleImageError_, this),
-        listenOnce(this.image_, EventType.LOAD,
-          this.handleImageLoad_, this)
-      ];
-      try {
-        /** @type {HTMLImageElement} */ (this.image_).src = this.src_;
-      } catch (e) {
-        this.handleImageError_();
+      if (typeof Image !== 'undefined') {
+        this.loadImageWithDom_();
+      } else {
+        this.loadImageWithinWorker_();
       }
     }
   }

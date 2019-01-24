@@ -84,10 +84,21 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
     const baseCanvas = this.context.canvas;
 
-    this.tilesByOpaqueId_ = {};
+    this.currentWorkerMessageId_ = 0;
+    this.tilesByWorkerMessageId_ = {};
+    this.tilesByWorkerMessageIdCount_ = 0;
 
     this.worker_ = layer.getWorker();
+    let previous = 0;
+    const counter = () => {
+      if (this.tilesByWorkerMessageIdCount_ !== previous) {
+        console.log('count', this.tilesByWorkerMessageIdCount_);
+        previous = this.tilesByWorkerMessageIdCount_;
+      }
+      requestAnimationFrame(counter);
+    };
     if (this.worker_) {
+      counter();
       this.worker_.addEventListener('message', this.onWorkerMessageReceived_.bind(this), false);
     }
 
@@ -178,9 +189,9 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
   onWorkerMessageReceived_(event) {
     console.log('received event in main thread', event.data);
-    const {images, action, opaqueTileId} = event.data;
+    const {images, action, messageId} = event.data;
     if (action === 'preparedTile') {
-      const tile = this.tilesByOpaqueId_[opaqueTileId];
+      const tile = this.tilesByWorkerMessageId_[messageId];
       const pixelRatio = tile['pixelRatio'];
       const projection = tile['projection'];
       const image = images[0];
@@ -191,11 +202,11 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       tile.hifi = true;
       tile.setState(TileState.LOADED);
     } else if (action === 'failedTilePreparation') {
-      const tile = this.tilesByOpaqueId_[opaqueTileId];
+      const tile = this.tilesByWorkerMessageId_[messageId];
       const state = event.data.state;
       tile.hifi = true;
       tile.setState(state);
-      console.log('Failed', opaqueTileId);
+      console.log('Failed', messageId);
     } else if (action === 'loadImage') {
       const {src, options, opaqueId} = event.data;
       const worker = this.worker_;
@@ -210,9 +221,11 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       loadImageUsingDom(src, options)
         .then(createImageBitmap)
         .then(sendContinueMessage);
+      return;
     }
-    delete this.tilesByOpaqueId_[opaqueTileId];
-    delete dateByTile[opaqueTileId];
+    delete this.tilesByWorkerMessageId_[messageId];
+    --this.tilesByWorkerMessageIdCount_;
+    delete dateByTile[messageId];
   }
 
   /**
@@ -300,27 +313,30 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     const tileUid = getUid(tile);
     //     console.log(tileUid, tile.getState(), 'getTile(', z, x, y, ') / ';
     const worker = this.worker_;
-    const tilesByOpaqueId = this.tilesByOpaqueId_;
     if (this.worker_) {
-      if (tile.getState() < TileState.LOADED && !tilesByOpaqueId[tileUid]) {
+      if (tile.getState() === TileState.IDLE && !tile['HACK_DONE']) {
+        const that = this;
         tile['load'] = function() {
           if (tile.getState() === TileState.IDLE) {
-            console.log(tileUid, tile.getState(), 'load tile(', z, x, y, ') ');
+            const messageId = ++that.currentWorkerMessageId_;
+            console.log(messageId, tile.getState(), 'load tile(', z, x, y, ') ');
             tile.setState(TileState.LOADING);
             tile['pixelRatio'] = pixelRatio;
             tile['projection'] = projection;
             const tileCoord = tile.getTileCoord();
-            tilesByOpaqueId[tileUid] = tile;
+            that.tilesByWorkerMessageId_[messageId] = tile;
+            that.tilesByWorkerMessageIdCount_++;
             dateByTile[tileUid] = Date.now();
             worker.postMessage({
               action: 'prepareTile',
               tileCoord: tileCoord,
-              opaqueTileId: tileUid,
+              messageId: messageId,
               pixelRatio: pixelRatio
             });
           }
           return [];
         };
+        tile['HACK_DONE'] = true;
       }
     } else {
       if (tile.getState() < TileState.LOADED) {

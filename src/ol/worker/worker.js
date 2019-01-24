@@ -29,10 +29,10 @@ const epsg3857 = getProjection('EPSG:3857');
 
 
 /**
- * @param {number} opaqueTileId An opaque id from the main thread.
+ * @param {number} messageId An opaque id from the main thread.
  * @param {VectorRenderTile} tile The rendered tile.
  */
-function success(opaqueTileId, tile) {
+function success(messageId, tile) {
   // Executors are not yet serializable.
   // So we render up-to a transferable canvas for now.
   const executors = {};
@@ -40,17 +40,17 @@ function success(opaqueTileId, tile) {
 
   self.postMessage({
     action: 'preparedTile',
-    opaqueTileId,
+    messageId: messageId,
     images: [bitmap],
     executors: executors
   }, [bitmap]);
 }
 
-function failure(opaqueTileId, tile) {
+function failure(messageId, tile) {
   self.postMessage({
     action: 'failedTilePreparation',
     state: tile.getState(),
-    opaqueTileId
+    messageId: messageId
   });
 }
 
@@ -58,11 +58,11 @@ self.onmessage = function(event) {
   console.log('Received event in worker', event.data);
   const action = event.data.action;
   if (action === 'prepareTile') {
-    const {opaqueTileId, tileCoord, pixelRatio} = event.data;
+    const {messageId, tileCoord, pixelRatio} = event.data;
     const [z, x, y] = tileCoord;
-    renderer.prepareTileInWorker(z, x, y, pixelRatio, epsg3857, opaqueTileId).then(
-      success.bind(null, opaqueTileId),
-      failure.bind(null, opaqueTileId)
+    renderer.prepareTileInWorker(z, x, y, pixelRatio, epsg3857, messageId).then(
+      success.bind(null, messageId),
+      failure.bind(null, messageId)
     );
   } else if (action === 'continueWorkerImageLoading') {
     const {opaqueId, image} = event.data;

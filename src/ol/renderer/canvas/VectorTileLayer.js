@@ -31,6 +31,7 @@ import {
 import CanvasExecutorGroup, {replayDeclutter} from '../../render/canvas/ExecutorGroup.js';
 import {isEmpty} from '../../obj.js';
 import {loadImageUsingDom} from '../../loadImage.js';
+import ExecutorGroup from '../../render/canvas/ExecutorGroup.js';
 
 const dateByTile = {};
 
@@ -189,7 +190,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
   onWorkerMessageReceived_(event) {
     console.log('received event in main thread', event.data);
-    const {images, action, messageId} = event.data;
+    const {images, action, messageId, executorGroup} = event.data;
     if (action === 'preparedTile') {
       const tile = this.tilesByWorkerMessageId_[messageId];
       const pixelRatio = tile['pixelRatio'];
@@ -198,6 +199,8 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       const canvas = /** @type {HTMLCanvasElement} */ (document.createElement('canvas'));
       tile.getContext(this.getLayer(), canvas.getContext('bitmaprenderer'));
       pushImage(canvas, image);
+      const layerId = getUid(this.getLayer());
+      tile.executorGroups[layerId] = executorGroup;
       this.updateExecutorGroup_(tile, pixelRatio, projection);
       tile.hifi = true;
       tile.setState(TileState.LOADED);

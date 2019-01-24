@@ -35,14 +35,14 @@ const epsg3857 = getProjection('EPSG:3857');
 function success(messageId, tile) {
   // Executors are not yet serializable.
   // So we render up-to a transferable canvas for now.
-  const executors = {};
+  const executorGroup = [];
   const bitmap = renderer.getTileImage(tile)['transferToImageBitmap']();
 
   self.postMessage({
     action: 'preparedTile',
     messageId: messageId,
     images: [bitmap],
-    executors: executors
+    executorGroup: executorGroup
   }, [bitmap]);
 }
 

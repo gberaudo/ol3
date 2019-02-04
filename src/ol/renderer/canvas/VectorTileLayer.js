@@ -93,7 +93,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
     let previous = 0;
     const counter = () => {
       if (this.tilesByWorkerMessageIdCount_ !== previous) {
-        console.log('count', this.tilesByWorkerMessageIdCount_);
+        console.log('count', this.tilesByWorkerMessageIdCount_, Object.values(this.tilesByWorkerMessageId_).map(tile => tile.ol_uid));
         previous = this.tilesByWorkerMessageIdCount_;
       }
       requestAnimationFrame(counter);
@@ -190,7 +190,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
   onWorkerMessageReceived_(event) {
     console.log('received event in main thread', event.data);
-    const {images, action, messageId, executorGroup} = event.data;
+    const {images, action, messageId, tileId, executorGroup} = event.data;
     if (action === 'preparedTile') {
       const tile = this.tilesByWorkerMessageId_[messageId];
       const pixelRatio = tile['pixelRatio'];
@@ -203,6 +203,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       tile.executorGroups[layerId] = executorGroup;
       this.updateExecutorGroup_(tile, pixelRatio, projection);
       tile.hifi = true;
+      console.log('main: setting loaded state', tileId);
       tile.setState(TileState.LOADED);
     } else if (action === 'failedTilePreparation') {
       const tile = this.tilesByWorkerMessageId_[messageId];
@@ -263,14 +264,15 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
 
   prepareTileInWorker(z, x, y, pixelRatio, projection, opaqueTileId) {
     const tile = this.getTile(z, x, y, pixelRatio, projection);
-    tile.opaque = opaqueTileId;
     const state = tile.getState();
     if (state === TileState.LOADING) {
-      console.log('in worker getTile is loading, no luck', opaqueTileId, tile, state);
-      console.log('this case results in a never released pending request');
+      console.error('in worker getTile is loading, no luck', opaqueTileId, tile, state);
+      console.error('this case results in a never released pending request');
     }
     if (state >= TileState.LOADED) {
-      console.log('in worker getTile already known', opaqueTileId, tile, state);
+      if (state !== TileState.LOADED) {
+        console.error('in worker getTile already known', opaqueTileId, tile, state);
+      }
       return new Promise(function(resolve, reject) {
         state === TileState.LOADED ? resolve(tile) : reject(tile);
       });
@@ -285,19 +287,22 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
             console.log('prepareTileInWorker loaded', opaqueTileId, state);
             that.renderTileImage_(tile, pixelRatio, projection);
             console.log('prepareTileInWorker loaded after renderTileImage', opaqueTileId, state);
+            if (!tile.hifi) {
+              debugger;
+            }
             tile.removeEventListener('change', listener);
             resolve(tile);
           } else if (state === TileState.ERROR) {
-            console.log('prepareTileInWorker error', opaqueTileId, state);
+            console.error('prepareTileInWorker error', opaqueTileId, state);
             tile.removeEventListener('change', listener);
             reject(tile);
           } else {
             if (state > TileState.LOADED) {
-              console.log('other state', opaqueTileId, state);
+              console.error('other state', opaqueTileId, state);
             }
           }
         } catch (e) {
-          console.log('prepareTileInWorker catch error', opaqueTileId, state);
+          console.error('prepareTileInWorker catch error', opaqueTileId, state);
           tile.setState(TileState.ERROR);
         }
       };
@@ -314,7 +319,6 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
   getTile(z, x, y, pixelRatio, projection) {
     const tile = /** @type {import("../../VectorRenderTile.js").default} */ (super.getTile(z, x, y, pixelRatio, projection));
     const tileUid = getUid(tile);
-    //     console.log(tileUid, tile.getState(), 'getTile(', z, x, y, ') / ';
     const worker = this.worker_;
     if (this.worker_) {
       if (tile.getState() === TileState.IDLE && !tile['HACK_DONE']) {
@@ -322,7 +326,6 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
         tile['load'] = function() {
           if (tile.getState() === TileState.IDLE) {
             const messageId = ++that.currentWorkerMessageId_;
-            console.log(messageId, tile.getState(), 'load tile(', z, x, y, ') ');
             tile.setState(TileState.LOADING);
             tile['pixelRatio'] = pixelRatio;
             tile['projection'] = projection;
@@ -330,12 +333,15 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
             that.tilesByWorkerMessageId_[messageId] = tile;
             that.tilesByWorkerMessageIdCount_++;
             dateByTile[tileUid] = Date.now();
-            worker.postMessage({
+            const msg = {
               action: 'prepareTile',
               tileCoord: tileCoord,
               messageId: messageId,
+              tileId: tileUid,
               pixelRatio: pixelRatio
-            });
+            };
+            console.log('Sending prepareTile to worker', msg);
+            worker.postMessage(msg);
           }
           return [];
         };
@@ -415,6 +421,7 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       }
     }
     tile.executorGroups[layerUid] = [];
+    let count = 0;
     for (let t = 0, tt = sourceTiles.length; t < tt; ++t) {
       const sourceTile = sourceTiles[t];
       if (sourceTile.getState() != TileState.LOADED) {
@@ -474,12 +481,16 @@ class CanvasVectorTileLayerRenderer extends CanvasTileLayerRenderer {
       }
       const executorGroupInstructions = builderGroup.finish();
       // no need to clip when the render tile is covered by a single source tile
+      Object.values(executorGroupInstructions).forEach(group => Object.values(group).forEach(i => count += i.instructions.length));
       const replayExtent = layer.getDeclutter() && sourceTiles.length === 1 ?
         null :
         sharedExtent;
       const renderingReplayGroup = new CanvasExecutorGroup(replayExtent, resolution,
         pixelRatio, source.getOverlaps(), this.declutterTree_, executorGroupInstructions, layer.getRenderBuffer());
       tile.executorGroups[layerUid].push(renderingReplayGroup);
+    }
+    if (!this.worker_ && !count) {
+      debugger;
     }
     builderState.renderedRevision = revision;
     builderState.renderedZ = tile.sourceZ;

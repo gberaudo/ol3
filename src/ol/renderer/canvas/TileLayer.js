@@ -174,11 +174,13 @@ class CanvasTileLayerRenderer extends CanvasLayerRenderer {
     const tmpExtent = this.tmpExtent;
     const tmpTileRange = this.tmpTileRange_;
     this.newTiles_ = false;
+    const uid = getUid(this);
+    // console.log('tiles to render');
     for (let x = tileRange.minX; x <= tileRange.maxX; ++x) {
       for (let y = tileRange.minY; y <= tileRange.maxY; ++y) {
         const tile = this.getTile(z, x, y, pixelRatio, projection);
+        // console.log(this.isDrawableTile(tile), tile.disposed_, tile.getState(), tile.ol_uid);
         if (this.isDrawableTile(tile)) {
-          const uid = getUid(this);
           if (tile.getState() == TileState.LOADED) {
             tilesToDrawByZ[z][tile.tileCoord.toString()] = tile;
             const inTransition = tile.inTransition(uid);
@@ -201,9 +203,18 @@ class CanvasTileLayerRenderer extends CanvasLayerRenderer {
         if (!covered) {
           tileGrid.forEachTileCoordParentTileRange(tile.tileCoord, findLoadedTiles, null, tmpTileRange, tmpExtent);
         }
-
       }
     }
+    const canvases = document.getElementById('canvases');
+    canvases.innerHTML = '';
+    Object.values(tilesToDrawByZ[z]).forEach(tile => {
+      canvases.appendChild(document.createTextNode(
+        `${tile.getTileCoord().toString()} - ${tile.ol_uid}`));
+      canvases.appendChild(tile.getContext(this.getLayer()).canvas);
+    });
+    console.log('rendering tiles', Object.values(tilesToDrawByZ[z]).map(tile => `${tile.ol_uid} - hifi ${tile.hifi} - alpha ${tile.getAlpha(uid, frameState.time)}`));
+
+    // console.log('-- tiles to render');
 
 
     const canvas = context.canvas;

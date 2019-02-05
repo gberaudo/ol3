@@ -38,7 +38,7 @@ import {clear} from '../../obj.js';
 const IMAGE_REPLAYS = {
   'image': [ReplayType.POLYGON, ReplayType.CIRCLE,
     ReplayType.LINE_STRING, ReplayType.IMAGE, ReplayType.TEXT],
-  'hybrid': [ReplayType.POLYGON, ReplayType.LINE_STRING]
+  'hybrid': [ReplayType.POLYGON, ReplayType.CIRCLE, ReplayType.LINE_STRING]
 };
 
 

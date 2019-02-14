@@ -8,17 +8,19 @@ import ExecutorGroup from '../src/ol/render/canvas/ExecutorGroup.js';
 import Executor from '../src/ol/render/canvas/Executor.js';
 import {registerMessageListenerForMainThread} from './mapbox-vector-tiles-custom-worker-image.js';
 
-function resizeCanvas(canvas, img) {
+
+/**
+ *
+ * @param {HTMLCanvasElement} canvas A canvas.
+ * @param {ImageBitmap} img An image to transfer.
+ */
+function pushImage(canvas, img) {
   if (canvas.width !== img.width) {
     canvas.width = img.width;
   }
   if (canvas.height !== img.height) {
     canvas.height = img.height;
   }
-}
-
-function pushImage(canvas, img) {
-  resizeCanvas(canvas, img);
   canvas.getContext('bitmaprenderer').transferFromImageBitmap(img);
   img.close();
 }
@@ -56,6 +58,11 @@ export default class CustomCanvasVectorTileLayerRenderer extends CanvasVectorTil
     return null;
   }
 
+  /**
+   *
+   * @param {ImageBitmap} bmp An image to display.
+   * @param {string} txt Some debugging string.
+   */
   logImage(bmp, txt) {
     const canvases = document.getElementById('canvases');
     const canvas = /** @type {HTMLCanvasElement} */ (document.createElement('canvas'));
@@ -69,15 +76,24 @@ export default class CustomCanvasVectorTileLayerRenderer extends CanvasVectorTil
     canvases.appendChild(canvas);
   }
 
+  /**
+   * @private
+   * @param {Event} event Some event.
+   */
   onWorkerMessageReceived_(event) {
-    const {images, action, messageId, executorGroup} = event.data;
+    const {action, messageId} = event.data;
+    /** @type {Array<ImageBitmap} */
+    const images = event.data.images;
+    /** @type {Array<import("../src/ol/render/canvas/ExecutorGroup.js").default} */
+
+    const executorGroup = event.data.executorGroup;
     if (action === 'preparedTile') {
       const tile = this.tilesByWorkerMessageId_[messageId];
       const pixelRatio = tile['pixelRatio'];
       const projection = tile['projection'];
       if (images.length > 0) {
         const image = images[0];
-        const canvas = /** @type {HTMLCanvasElement} */ (document.createElement('canvas'));
+        const canvas = document.createElement('canvas');
         tile.getContext(this.getLayer(), canvas.getContext('bitmaprenderer'));
         // this.logImage(image, tile.getTileCoord().toString());
         pushImage(canvas, image);
@@ -218,5 +234,4 @@ export default class CustomCanvasVectorTileLayerRenderer extends CanvasVectorTil
     }
     return tile;
   }
-
 }

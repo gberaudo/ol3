@@ -19,18 +19,18 @@ module.exports = {
   context: src,
   target: 'web',
   entry: entry,
-  module: {
-    rules: [{
-      use: {
-        loader: 'buble-loader'
-      },
-      test: /\.js$/,
-      include: [
-        path.join(__dirname, '..', '..', 'src'),
-        path.join(__dirname, '..')
-      ]
-    }]
-  },
+//  module: {
+//    rules: [{
+//      use: {
+//        loader: 'buble-loader'
+//      },
+//      test: /\.js$/,
+//      include: [
+//        path.join(__dirname, '..', '..', 'src'),
+//        path.join(__dirname, '..')
+//      ]
+//    }]
+//  },
   optimization: {
     minimizer: [
       new TerserPlugin({

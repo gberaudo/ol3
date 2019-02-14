@@ -9,7 +9,7 @@ import {domFallbacks} from '../src/ol/dom.js';
 import {cssFallbacks} from '../src/ol/css';
 import {canvasFallbacks} from '../src/ol/render/canvas';
 import {getUid} from '../src/ol/util';
-import {loadImageFromWithinWorker, registerMessageListenerForWorker} from './mapbox-vector-tiles-custom-worker-image';
+import WorkerImage, {loadImageFromWithinWorker, registerMessageListenerForWorker} from './mapbox-vector-tiles-custom-worker-image';
 
 
 const stopAtInstructionsCreation = false;
@@ -33,7 +33,8 @@ canvasFallbacks.measureTextHeight = function() {
 };
 
 // Delegate images loading to the main thread
-setLoadImageHelper(loadImageFromWithinWorker);
+// setLoadImageHelper(loadImageFromWithinWorker);
+self.Image = WorkerImage;
 
 // Listen for image loading messages from the main thread
 registerMessageListenerForWorker();

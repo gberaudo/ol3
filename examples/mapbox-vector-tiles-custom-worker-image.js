@@ -70,14 +70,14 @@ export function registerMessageListenerForMainThread(worker) {
 }
 
 
-export default class WorkerImage extends OffscreenCanvas {
+export default class {
 
   /**
    * @param {number} [width] Canvas width.
    * @param {number} [height] Canvas height.
    */
   constructor(width, height) {
-    super(width || 0, height || 0);
+    this.canvas_ = new OffscreenCanvas(width || 0, height || 0);
     this.width_ = width;
     this.height_ = height;
     this.previousListeners_ = {};
@@ -91,10 +91,10 @@ export default class WorkerImage extends OffscreenCanvas {
     const onSuccess = function(bmp) {
       this.imageBitmap_ = bmp;
       this.drawImage_();
-      this.dispatchEvent(new CustomEvent('load'));
+      this.canvas_.dispatchEvent(new CustomEvent('load'));
     }.bind(this);
     const onError = function() {
-      this.dispatchEvent(new CustomEvent('error'));
+      this.canvas_.dispatchEvent(new CustomEvent('error'));
     }.bind(this);
     loadImageFromWithinWorker(url, {}, onSuccess, onError);
   }
@@ -106,14 +106,14 @@ export default class WorkerImage extends OffscreenCanvas {
     /**
      * @type {CanvasRenderingContext2D}
      */
-    const ctx = this.getContext('2d');
+    const ctx = this.canvas_.getContext('2d');
     if (!this.height_) {
-      this.height_ = super.height = this.imageBitmap_.height;
+      this.height_ = this.canvas_.height = this.imageBitmap_.height;
     }
     if (!this.width_) {
-      this.width_ = super.width = this.imageBitmap_.width;
+      this.width_ = this.canvas_.width = this.imageBitmap_.width;
     }
-    ctx.drawImage(this.imageBitmap_, 0, 0, super.width, super.height);
+    ctx.drawImage(this.imageBitmap_, 0, 0, this.width_, this.height_);
   }
 
   /**
@@ -123,23 +123,15 @@ export default class WorkerImage extends OffscreenCanvas {
     return this.src_;
   }
 
-  get width() {
-    return super.width;
-  }
-
   /**
    * @param {number} width New width.
    */
   set width(width) {
     if (this.width_ !== width) {
       this.width_ = width;
-      super.width = width;
+      this.canvas_.width = width;
       this.drawImage_();
     }
-  }
-
-  get height() {
-    return super.height;
   }
 
   /**
@@ -148,7 +140,7 @@ export default class WorkerImage extends OffscreenCanvas {
   set height(height) {
     if (this.height !== height) {
       this.height_ = height;
-      super.height = height;
+      this.canvas_.height = height;
       this.drawImage_();
     }
   }
@@ -164,9 +156,9 @@ export default class WorkerImage extends OffscreenCanvas {
   changeListener_(type, fn) {
     const previousFn = this.previousListeners_[type];
     if (previousFn) {
-      this.removeEventListener(type, previousFn);
+      this.canvas_.removeEventListener(type, previousFn);
     }
     this.previousListeners_[type] = fn;
-    this.addEventListener(type, fn);
+    this.canvas_.addEventListener(type, fn);
   }
 }

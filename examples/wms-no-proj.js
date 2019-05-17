@@ -4,6 +4,22 @@ import {Image as ImageLayer, Tile as TileLayer} from '../src/ol/layer.js';
 import Projection from '../src/ol/proj/Projection.js';
 import ImageWMS from '../src/ol/source/ImageWMS.js';
 import TileWMS from '../src/ol/source/TileWMS.js';
+import {TileDebug} from '../src/ol/source.js';
+import {createXYZ} from '../src/ol/tilegrid.js';
+import VectorTileLayer from '../src/ol/layer/VectorTile.js';
+import VectorTileSource from '../src/ol/source/VectorTile.js';
+import MVT from '../src/ol/format/MVT.js';
+
+
+const routesMVTLayer = new VectorTileLayer({
+  source: new VectorTileSource({
+    attributions: '© the guys',
+    //projection: 'EPSG:21781',
+    format: new MVT(),
+    url: 'http://localhost:8000/mvt/21781/{z}/{x}/{y}.pbf',
+    maxZoom: 14
+  }),
+});
 
 
 const layers = [
@@ -28,6 +44,12 @@ const layers = [
       serverType: 'mapserver',
       url: 'https://wms.geo.admin.ch/'
     })
+  }),
+  routesMVTLayer,
+  new TileLayer({
+    source: new TileDebug({
+      tileGrid: routesMVTLayer.getSource().getTileGrid()
+    })
   })
 ];
 
@@ -50,3 +72,5 @@ const map = new Map({
     zoom: 9
   })
 });
+
+
